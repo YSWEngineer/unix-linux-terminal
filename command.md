@@ -377,3 +377,151 @@ UNIXコマンドにおいて半角スペースは、コマンドとそのオプ�
 
 <details><summary>#07 コマンドの詳細を調べてみよう</summary>
 
+- どのようなオプションが使用できるかは、`ls --help`で確認できる。
+    
+    ```bash
+    dotinstall:~ $ ls --help
+    BusyBox v1.31.1 () multi-call binary.
+    
+    Usage: ls [-1AaCxdLHRFplinshrSXvctu] [-w WIDTH] [FILE]...
+    
+    List directory contents #各オプションの内容が表示されている
+    
+            -1      One column output
+            -a      Include entries which start with .
+            -A      Like -a, but exclude . and ..
+            -x      List by lines
+            -d      List directory entries instead of contents
+            -L      Follow symlinks
+            -H      Follow symlinks on command line
+            -R      Recurse
+            -p      Append / to dir entries
+            -F      Append indicator (one of */=@|) to entries
+            -l      Long listing format
+            -i      List inode numbers
+            -n      List numeric UIDs and GIDs instead of names
+            -s      List allocated blocks
+            -lc     List ctime
+            -lu     List atime
+            --full-time     List full date and time
+            -h      Human readable sizes (1K 243M 2G)
+            --group-directories-first
+            -S      Sort by size
+            -X      Sort by extension
+            -v      Sort by version
+            -t      Sort by mtime
+            -tc     Sort by ctime
+            -tu     Sort by atime
+            -r      Reverse sort order
+            -w N    Format N columns wide
+            --color[={always,never,auto}]   Control coloring
+    ```
+    
+- 他のオプションを試してみる。
+- オプションは大文字小文字が区別されるので、大文字のSを使ってetcディレクトリの中身をサイズ順に並び替えてみる。
+    
+    ```bash
+    dotinstall:~ $ ls -alS /etc/
+    total 216
+    -rw-r--r--    1 root     root         14464 May 29  2020 services
+    -rw-r--r--    1 root     root          6169 May 25  2020 sudo_logsrvd.conf
+    -rw-r--r--    1 root     root          5613 Jun 18  2020 ca-certificates.conf
+    -rw-r--r--    1 root     root          5306 May 22  2020 udhcpd.conf
+    drwxr-xr-x    1 root     root          4096 Aug 22 11:29 .
+    drwxr-xr-x    1 root     root          4096 Aug 22 11:29 ..
+    drwxr-xr-x    1 root     root          4096 Sep 23  2020 apk
+    drwxr-xr-x    3 root     root          4096 Sep 23  2020 ca-certificates
+    drwxr-xr-x    2 root     root          4096 May 29  2020 conf.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 crontabs
+    drwxr-xr-x    2 root     root          4096 May 29  2020 init.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 logrotate.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 modprobe.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 modules-load.d
+    drwxr-xr-x    8 root     root          4096 May 29  2020 network
+    drwxr-xr-x    2 root     root          4096 May 29  2020 opt
+    drwxr-xr-x    7 root     root          4096 May 29  2020 periodic
+    drwxr-xr-x    1 root     root          4096 Sep 23  2020 profile.d
+    drwxr-xr-x    1 root     root          4096 May 29  2020 ssl
+    drwxr-x---    2 root     root          4096 Sep 23  2020 sudoers.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 sysctl.d
+    drwxr-xr-x   13 root     root          4096 Sep 23  2020 terminfo
+    -rw-r--r--    1 root     root          3941 May 25  2020 sudo.conf
+    -rw-r--r--    1 root     root          3228 Sep 23  2020 sudoers
+    -r--r-----    1 root     root          3174 May 25  2020 sudoers.dist
+    -rw-r--r--    1 root     root          1865 May 29  2020 protocols
+    -rw-r--r--    1 root     root          1748 Feb  9  2020 inputrc
+    -rw-r--r--    1 root     root          1233 Sep 23  2020 passwd
+    -rw-r--r--    1 root     root          1172 May 29  2020 passwd-
+    -rw-r--r--    1 root     root           693 Sep 23  2020 group
+    -rw-r--r--    1 root     root           682 May 29  2020 group-
+    -rw-r--r--    1 root     root           570 May 29  2020 inittab
+    -rw-r-----    1 root     shadow         454 Sep 23  2020 shadow
+    -rw-r-----    1 root     shadow         422 May 29  2020 shadow-
+    -rw-r--r--    1 root     root           309 Aug  9  2020 localtime
+    -rw-r--r--    1 root     root           283 May 29  2020 motd
+    -rw-r--r--    1 root     root           238 May 29  2020 profile
+    -rw-r--r--    1 root     root           178 Aug 22 11:29 hosts
+    -rw-r--r--    1 root     root           164 May 29  2020 os-release
+    -rw-r--r--    1 root     root            89 May 29  2020 fstab
+    -rw-r--r--    1 root     root            65 May 22  2020 securetty
+    -rw-r--r--    1 root     root            54 May 29  2020 issue
+    -rw-r--r--    1 root     root            54 Aug 22 11:29 resolv.conf
+    -rw-r--r--    1 root     root            53 May 29  2020 sysctl.conf
+    -rw-r--r--    1 root     root            48 Sep 23  2020 shells
+    -rw-r--r--    1 root     root            15 May 29  2020 modules
+    -rw-r--r--    1 root     root            13 Aug 22 11:29 hostname
+    lrwxrwxrwx    1 root     root            12 Aug 22 11:29 mtab -> /proc/mounts
+    -rw-r--r--    1 root     root             7 May 29  2020 alpine-release
+    ```
+    
+- より詳細な使い方についてはマニュアルを見ることができる。
+    - man lsでlsについての詳細なマニュアルが表示される。
+    
+    ```bash
+    dotinstall:~ $ man ls
+    LS(1P)                     POSIX Programmer's Manual                    LS(1P)
+    
+    PROLOG
+           This manual page is part of the POSIX Programmer's Manual.  The Linux
+           implementation of this interface may differ (consult the corresponding
+           Linux manual page for details of Linux behavior), or the interface may
+           not be implemented on Linux.
+    
+    NAME
+           ls — list directory contents
+    
+    SYNOPSIS
+           ls [−ikqrs] [−glno] [−A|−a] [−C|−m|−x|−1] \
+               [−F|−p] [−H|−L] [−R|−d] [−S|−f|−t] [−c|−u] [file...]
+    
+    DESCRIPTION
+           For each operand that names a file of a type other than directory or
+           symbolic link to a directory, ls shall write the name of the file as
+           well as any requested, associated information. For each operand that
+           names a file of type directory, ls shall write the names of files
+           contained within the directory as well as any requested, associated
+           information. Filenames beginning with a <period> ('.') and any
+           associated information shall not be written out unless explicitly
+           referenced, the −A or −a option is supplied, or an implem--More-- (3% of 38335 bytes)
+    ```
+    
+    - ↑この画面ではspaceキーで次のページに行くことができて、Qキー(quitのq)を押すと終了することができる。
+### 質問：「ls --help」が 「illegal option -- -」と表示されてしまいます。
+回答：macOS の zsh では --help を使うことはできません。
+
+オンラインターミナルで採用している Linux 系統の OS と、 macOS が採用している BSD 系統の OS で、搭載されている ls コマンドのバージョンが違うようです。
+
+BSD 版の ls コマンドでは `--help` オプションは利用できないので、 `man ls` としてマニュアルを見てみてください。
+### 要点
+- ls --help：使用可能なオプションを確認できる。
+    - ※macOS の zsh では --help を使うことはできません。
+        
+        オンラインターミナルで採用している Linux 系統の OS と、 macOS が採用している BSD 系統の OS で、搭載されている ls コマンドのバージョンが違うようです。
+        
+        BSD 版の ls コマンドでは `--help` オプションは利用できないので、 `man ls` としてマニュアルを見てみてください。
+        
+- man ls：より詳細なマニュアルを表示する(manコマンド)。</details>
+
+
+<details><summary>#08 ワイルドカードを使ってみよう</summary>
+

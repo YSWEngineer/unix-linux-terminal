@@ -586,3 +586,57 @@ BSD 版の ls コマンドでは `--help` オプションは利用できない
 
 
 <details><summary>#09 ファイルを操作してみよう</summary>
+
+- ファイルを作成するには、touchコマンドを使用する。touchコマンドはファイルの更新日時を更新するためのものだが、ファイルがない場合は、空のファイルを作成する。UNIXは不親切でファイルを作成しました、というメッセージは表示されない。エラーがなければ正常に処理されたことを意味するので、慣れておくこと。
+
+```bash
+dotinstall:~ $ touch index.html
+dotinstall:~ $ # エラーがなければ正常に処理されたことを意味する
+```
+
+```bash
+dotinstall:~ $ ls # lsコマンドはディレクトリの中身を確認する
+index.html # lsコマンドで確認すると、index.htmlファイルが作成されたことが確認できる
+```
+
+- ファイルをコピーして別のファイルを作成したい場合は、cp(copy)コマンドを使用する。index.htmlをprofile.htmlにコピーする作業を行う。
+
+```bash
+dotinstall:~ $ cp index.html profile.html # index.htmlをprofile.htmlにコピー
+dotinstall:~ $ ls # lsコマンドでディレクトリの中身を確認
+index.html    profile.html
+```
+
+- ファイル名を変更したい場合、mv(move)コマンドを使用するが、同じ場所に違う名前で移動させることで名前の変更ができる。
+    - profile.htmlをabout.htmlに移動させる
+
+```bash
+dotinstall:~ $ mv profile.html about.html # profile.htmlをabout.htmlに移動する
+dotinstall:~ $ ls
+about.html  index.html # profile.htmlがabout.htmlに名前が変更
+```
+
+- ファイルを削除したい場合、rm(remove)コマンドを使用する。ちなみにUNIXの場合、ゴミ箱のような仕組みはないので、一度削除したファイルを復元することはできない。そのため、削除には十分注意すること。
+
+```bash
+dotinstall:~ $ rm about.html # rmコマンドでabout.htmlファイルを削除する
+dotinstall:~ $ # エラー表示がないので削除に成功
+dotinstall:~ $ ls
+index.html # about.htmlファイルが削除されていることを確認
+```
+
+### 質問：なぜ移動させると名前が変わるのですか？
+    
+回答：mv profile.html about.html とすると profile.html を削除して同じ内容の about.html というファイルを配置するので、結果的に名前が変わったことになります。
+
+`mv`コマンドは元のファイルを削除して同じ内容のファイルを指定先に配置するコマンドです。
+
+`mv profile.html about.html` とすると profile.html を削除して同じ内容のファイルを about.html という名前で配置するので、結果的に名前が変わったことになります。
+###　要点
+- touch：ファイルの日時を更新するためのものだが、ファイルがない場合はファイルを作成する。
+- cp：ファイルをコピーして別のファイルを作成する。
+- mv：元のファイルを削除して同じ内容のファイルを指定先に配置する。
+- rm(remove)：ファイルを削除する。削除されたファイルは復元できないことに注意。</details>
+
+
+<details><summary>#10 ディレクトリを操作してみよう</summary>

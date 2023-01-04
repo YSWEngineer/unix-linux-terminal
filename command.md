@@ -213,3 +213,167 @@ UNIXコマンドにおいて半角スペースは、コマンドとそのオプ�
 
 <details><summary>#05 相対PATHでディレクトリを移動しよう</summary>
 
+- 相対パスでディレクトリを移動する
+    - 一つ上のhomeディレクトリは相対パスでは`..`
+    
+    ```bash
+    dotinstall:~ $ pwd # 今いるディレクトリを表示する
+    /home/dotinstall
+    dotinstall:~ $ cd .. # .. で一つ上のディレクトリに移動する
+    dotinstall:/home $
+    dotinstall:/home $ cd .. # .. でさらに一つ上のディレクトリに移動する
+    dotinstall:/ $ # rootディレクトリにいる状態
+    ```
+    
+- ここで、rootディレクトリの下のetcディレクトリに移動したかった場合
+    - 自分のディレクトリを表す`.`に`/etc`を繋げるか、今いるディレクトリの下のディレクトリ名を指定する。
+    
+    ```bash
+    dotinstall:/ $ cd etc # etcディレクトリに移動する
+    dotinstall:/etc $ # プロンプトを確認するとetcディレクトリに移動したことがわかる
+    ```
+    
+- ユーザーのhomeディレクトリに戻る
+    - `cd` returnキーを押す。
+    
+    ```bash
+    dotinstall:/etc $ cd # ユーザーのhomeディレクトリに戻る
+    dotinstall:~ $
+    ```
+    
+- etcディレクトリに一気に移動する
+    - 一つ上のディレクトリ、homeディレクトリに移動→homeディレクトリの上のrootディレクトリに移動→rootディレクトリの下のetcディレクトリに移動する。`cd ../../etc`
+    
+    ```bash
+    dotinstall:~ $ cd ../../etc
+    dotinstall:/etc $
+    ```
+    
+- どのディレクトリに移動できるかわからなくなってしまった場合、tabキーによる補完を使用すると良い。
+    
+    ```bash
+    dotinstall:/etc $ cd ../ # tabキーを2回押すと現在位置から移動可能なディレクトリが表示される
+    .dockerenv         index.js           package-lock.json  srv/
+    bin/               lib/               package.json       sys/
+    command.js         media/             proc/              tmp/
+    dev/               mnt/               root/              usr/
+    etc/               node_modules/      run/               var/
+    home/              opt/
+    ```
+    
+- 相対パスは慣れないとやや難しく感じるのですが、tabキーによる補完を使用して使いこなせるようにしましょう。
+### 要点
+- .：一つ下のディレクトリに移動する。
+- ..：一つ上のディレクトリに移動する。
+- TABキーによるディレクトリ確認：tabキーを2回押して、現在位置から移動可能なディレクトリが表示される。</details>
+
+
+<details><summary>#06 lsコマンドを使ってみよう</summary>
+
+- ディレクトリの中身を見る。
+    - `ls`(list)コマンドを使う。
+    
+    ```bash
+    dotinstall:~ $ ls # lsコマンドでディレクトリの中身を確認する
+    dotinstall:~ $ # 何も表示されないのはhomeディレクトリに何もないから
+    ```
+    
+- 隠しファイルが存在していることもある。
+    - lsにオプションを付ける。オプションは-で付ける。今回は-aとする。
+    - UNIXでは、`.`で始まるファイルやディレクトリがlsコマンドでは表示されない隠しファイルになるので以下のような表示になっている。
+    - 最初の二つはディレクトリ自身と、一つ上のディレクトリを示す。
+    - .bashrcは設定ファイルで、簡単にいじられないように隠しファイルになっていると理解すること。
+    - 青色はファイルではなく、ディレクトリという意味。
+    
+    ```bash
+    dotinstall:~ $ ls -a
+    .        ..       .bashrc  .config
+    ```
+    
+    ![lsコマンドを使ってみよう.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6e83747b-3ce6-4a63-b6c8-1b7715097da5/ls%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%88%E3%82%99%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86.png)
+    
+- lsコマンドの他のオプション。
+    - -lで詳細な情報を見ることができる。
+    - オプションは複数指定することもできる。
+        - `-l -a`
+        - `-la`
+        - `-al`
+        
+        と、-aを並べたり、くっつけたり、順不同で-laや-alと書いても同じ意味になる。
+        
+    
+    ```bash
+    dotinstall:~ $ ls -al
+    total 20
+    drwxr-sr-x    1 dotinsta wheel         4096 Aug 22 11:29 .
+    drwxr-xr-x    1 root     root          4096 Sep 23  2020 ..
+    -rw-r--r--    1 root     root            23 Sep 23  2020 .bashrc
+    drwx--S---    3 dotinsta wheel         4096 Aug 22 11:29 .config
+    ```
+    
+- lsにさらにディレクトリを渡して他のディレクトリの情報を見ることができる。今回はetcディレクトリの中身を見てみる。
+    
+    ```bash
+    dotinstall:~ $ ls -al /etc/
+    total 216
+    drwxr-xr-x    1 root     root          4096 Aug 22 11:29 .
+    drwxr-xr-x    1 root     root          4096 Aug 22 11:29 ..
+    -rw-r--r--    1 root     root             7 May 29  2020 alpine-release
+    drwxr-xr-x    1 root     root          4096 Sep 23  2020 apk
+    drwxr-xr-x    3 root     root          4096 Sep 23  2020 ca-certificates
+    -rw-r--r--    1 root     root          5613 Jun 18  2020 ca-certificates.conf
+    drwxr-xr-x    2 root     root          4096 May 29  2020 conf.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 crontabs
+    -rw-r--r--    1 root     root            89 May 29  2020 fstab
+    -rw-r--r--    1 root     root           693 Sep 23  2020 group
+    -rw-r--r--    1 root     root           682 May 29  2020 group-
+    -rw-r--r--    1 root     root            13 Aug 22 11:29 hostname
+    -rw-r--r--    1 root     root           178 Aug 22 11:29 hosts
+    drwxr-xr-x    2 root     root          4096 May 29  2020 init.d
+    -rw-r--r--    1 root     root           570 May 29  2020 inittab
+    -rw-r--r--    1 root     root          1748 Feb  9  2020 inputrc
+    -rw-r--r--    1 root     root            54 May 29  2020 issue
+    -rw-r--r--    1 root     root           309 Aug  9  2020 localtime
+    drwxr-xr-x    2 root     root          4096 May 29  2020 logrotate.d
+    drwxr-xr-x    2 root     root          4096 May 29  2020 modprobe.d
+    -rw-r--r--    1 root     root            15 May 29  2020 modules
+    drwxr-xr-x    2 root     root          4096 May 29  2020 modules-load.d
+    -rw-r--r--    1 root     root           283 May 29  2020 motd
+    lrwxrwxrwx    1 root     root            12 Aug 22 11:29 mtab -> /proc/mounts
+    drwxr-xr-x    8 root     root          4096 May 29  2020 network
+    drwxr-xr-x    2 root     root          4096 May 29  2020 opt
+    -rw-r--r--    1 root     root           164 May 29  2020 os-release
+    -rw-r--r--    1 root     root          1233 Sep 23  2020 passwd
+    -rw-r--r--    1 root     root          1172 May 29  2020 passwd-
+    drwxr-xr-x    7 root     root          4096 May 29  2020 periodic
+    -rw-r--r--    1 root     root           238 May 29  2020 profile
+    drwxr-xr-x    1 root     root          4096 Sep 23  2020 profile.d
+    -rw-r--r--    1 root     root          1865 May 29  2020 protocols
+    -rw-r--r--    1 root     root            54 Aug 22 11:29 resolv.conf
+    -rw-r--r--    1 root     root            65 May 22  2020 securetty
+    -rw-r--r--    1 root     root         14464 May 29  2020 services
+    -rw-r-----    1 root     shadow         454 Sep 23  2020 shadow
+    -rw-r-----    1 root     shadow         422 May 29  2020 shadow-
+    -rw-r--r--    1 root     root            48 Sep 23  2020 shells
+    drwxr-xr-x    1 root     root          4096 May 29  2020 ssl
+    -rw-r--r--    1 root     root          3941 May 25  2020 sudo.conf
+    -rw-r--r--    1 root     root          6169 May 25  2020 sudo_logsrvd.conf
+    -rw-r--r--    1 root     root          3228 Sep 23  2020 sudoers
+    drwxr-x---    2 root     root          4096 Sep 23  2020 sudoers.d
+    -r--r-----    1 root     root          3174 May 25  2020 sudoers.dist
+    -rw-r--r--    1 root     root            53 May 29  2020 sysctl.conf
+    drwxr-xr-x    2 root     root          4096 May 29  2020 sysctl.d
+    drwxr-xr-x   13 root     root          4096 Sep 23  2020 terminfo
+    -rw-r--r--    1 root     root          5306 May 22  2020 udhcpd.conf
+    ```
+    
+- 水色は別のファイルやディレクトリへのリンクを表している。
+### 要点
+- ls：ディレクトリの中身を確認する。
+- -a：隠しファイルや隠しディレクトリを表示する。
+- -l：詳細な情報を見ることができる。
+- オプションの複数指定：オプションは、並べたり、くっつけたり、順不同で書くこともできる。</details>
+
+
+<details><summary>#07 コマンドの詳細を調べてみよう</summary>
+

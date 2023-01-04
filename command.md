@@ -525,3 +525,64 @@ BSD 版の ls コマンドでは `--help` オプションは利用できない
 
 <details><summary>#08 ワイルドカードを使ってみよう</summary>
 
+- ls -lで表示した情報の中から特定の項目だけを表示するにはワイルドカードという仕組みが使える。
+    - 拡張子が.confだけの項目を抜き出す。
+        - .を除く0文字以上の任意の文字列は*(アスタリスク)で表現できるので、`ls -l *.conf` と書く。
+        
+        ```bash
+        dotinstall:/etc $ ls -l *.conf # *は0文字以上の任意の文字列を表現、.confだけの項目を表示
+        -rw-r--r--    1 root     root          5613 Jun 18  2020 ca-certificates.conf
+        -rw-r--r--    1 root     root            54 Aug 22 11:29 resolv.conf
+        -rw-r--r--    1 root     root          3941 May 25  2020 sudo.conf
+        -rw-r--r--    1 root     root          6169 May 25  2020 sudo_logsrvd.conf
+        -rw-r--r--    1 root     root            53 May 29  2020 sysctl.conf
+        -rw-r--r--    1 root     root          5306 May 22  2020 udhcpd.conf
+        ```
+        
+        - ?マークは任意の1文字を表すので、`ls -l s?????` と書くと、sで始まる6文字の項目だけ表示。
+        
+        ```bash
+        dotinstall:/etc $ ls -l s????? # sから始まる6文字の項目を表示
+        -rw-r-----    1 root     shadow         454 Sep 23  2020 shadow
+        -rw-r--r--    1 root     root            48 Sep 23  2020 shells
+        ```
+        
+        - [ ] は任意の1文字か範囲を示すことができて、例えば `[ps]?????` とすれば、pかsで始まる6文字の項目だけを表示。
+        
+        ```bash
+        dotinstall:/etc $ ls -l [ps]????? # pまたはsから始まる6文字の項目を表示
+        -rw-r--r--    1 root     root          1233 Sep 23  2020 passwd
+        -rw-r-----    1 root     shadow         454 Sep 23  2020 shadow
+        -rw-r--r--    1 root     root            48 Sep 23  2020 shells
+        ```
+        
+        - [ ] を使った時は、- で範囲を表せるので、`[f-h]*` とするとf g h で始まる項目だけを表示。
+        
+        ```bash
+        dotinstall:/etc $ ls -l [f-h]* # fからh、要するにf,g,hから始まる項目を表示
+        -rw-r--r--    1 root     root            89 May 29  2020 fstab
+        -rw-r--r--    1 root     root           693 Sep 23  2020 group
+        -rw-r--r--    1 root     root           682 May 29  2020 group-
+        -rw-r--r--    1 root     root            13 Aug 23 15:14 hostname
+        -rw-r--r--    1 root     root           178 Aug 23 15:14 hosts
+        ```
+        
+        - 任意の文字列のどれかという指定をする場合は、`{ }` を使用する。※カンマの後ろに空白を入れないこと。
+        
+        ```bash
+        dotinstall:/etc $ ls -l {sh,ho}* # 文字列の中に「sh」または「ho」で始まる項目を表示 # カンマの後ろには空白を入れてはいけない
+        -rw-r--r--    1 root     root            13 Aug 23 15:14 hostname
+        -rw-r--r--    1 root     root           178 Aug 23 15:14 hosts
+        -rw-r-----    1 root     shadow         454 Sep 23  2020 shadow
+        -rw-r-----    1 root     shadow         422 May 29  2020 shadow-
+        -rw-r--r--    1 root     root            48 Sep 23  2020 shells
+        ```
+        
+### 要点
+- *：(ワイルドカードにおいて)任意の文字列を表現できる。
+- ?：(ワイルドカードにおいて)任意の1文字を表す。
+- [ ]：(ワイルドカードにおいて)任意の1文字か、範囲を表す。
+- {, }：(ワイルドカードにおいて)任意の文字列のどれかを表す。,(カンマ)で区切ったその後ろには空白を入れないこと。</details>
+
+
+<details><summary>#09 ファイルを操作してみよう</summary>

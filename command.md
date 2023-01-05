@@ -919,7 +919,74 @@ touch ファイル名
 
 `ls`はディレクトリにあるファイルやディレクトリを一覧で表示するためのコマンドです。`ls -l` とすると、ファイルの実行権限や所有やサイズなどの情報が表示されるようになります。`ls`はあくまでもディレクトリの中にあるファイルの一覧を表示するためのコマンドなので、ファイルの中身を表示することはできません。
 
-`cat`は上述の通りでファイルの中身を表示してくれます。</details>
+`cat`は上述の通りでファイルの中身を表示してくれます。
+### 要点
+- cat：**ファイルの中身を見るコマンド。**
+- ページャー：ファイルの中身をページごとに表示する機能。
+- more：ファイルの中身を見るコマンド。ページャーの機能が付いている。
+- less：ファイルの中身を見るコマンド。ページャーの機能が付いている。/の後ろに検索したい単語を入力するとその箇所まで移動する。検索時Nキーで次の検索結果まで移動することができる。</details>
 
 
-<details><summary>
+<details><summary>#14 wc,head,tail,grepコマンドを使ってみよう</summary>
+
+- テキストを操作するためのコマンド。
+    - wc(word count)は行数や単語数などを教えてくれる。左から行数、単語数、バイト数、ファイル名を表示。ちなみに、日本語のテキストの場合、英語と違い単語の区切りが分かりづらいため正確な単語数が表示されない点に注意すること。
+        
+        ```bash
+        dotinstall:~ $ wc services # servicesファイルの行数、単語数、バイト数、ファイル名を表示。
+              417      1994     14464 services # 左から行数、単語数、バイト数、ファイル名
+        ```
+        
+        - 行数だけを表示する -l オプションもよく使われる。
+        
+        ```bash
+        dotinstall:~ $ wc -l services # servicesファイルの行数を表示せよ
+        417 services # 行数、ファイル名が表示
+        ```
+        
+    - 先頭や末尾の何行かだけを確認したい場合に使用する、headとtail。先頭の3行を確認する場合、
+        
+        ```bash
+        dotinstall:~ $ head -n 3 services # headコマンド -nオプション 3 ファイル名
+        # または
+        dotinstall:~ $ head -3 services # headコマンド -3 ファイル名
+        
+        # Network services, Internet style
+        #
+        # Note that it is presently the policy of IANA to assign a single well-known
+        ```
+        
+        末尾の3行を確認する場合、
+        
+        ```bash
+        dotinstall:~ $ tail -3 services # tailコマンド -3 ファイル名
+        fido            60179/tcp                       # fidonet EMSI over TCP
+        
+        # Local services
+        ```
+        
+    - grepについて、これはファイルの中身から特定の単語を検索するためのコマンド。これから backup という単語が services に含まれるかどうか検索する。grepは高機能なのが特徴。
+        
+        ```bash
+        dotinstall:~ $ grep 'backup' services # grepコマンドでbackupという単語がservicesファイルに含まれているか検索せよ。
+        amanda          10080/tcp                       # amanda backup services
+        afbackup        2988/tcp                        # Afbackup system
+        afbackup        2988/udp
+        afmbackup       2989/tcp                        # Afmbackup system
+        afmbackup       2989/udp
+        kamanda         10081/tcp                       # amanda backup services (Kerberos)
+        amandaidx       10082/tcp                       # amanda backup services
+        amidxtape       10083/tcp                       # amanda backup services
+        # 以上のようにbackupが含まれる行が表示された。
+        ```
+
+### 要点
+- wc：wc(word count)は行数や単語数などを教えてくれる。
+- head：先頭の何行かを表示するコマンド。
+- tail：末尾の何行かを表示するコマンド。
+- grep：ファイルの中にある特定の単語を検索するコマンド。</details>
+
+
+<details><summary>#15 コマンドの履歴を活用してみよう</summary>
+
+

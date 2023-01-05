@@ -749,7 +749,7 @@ myprofile # mysite から myprofile へと名前が変更していることが�
 ### 要点
 - mkdir -p：深い階層までディレクトリを作成することができる。
 - cp -r：ディレクトリを丸ごとコピーできる。
-- rm -r：ディレクトリを丸ごと削除できる。※このコマンドはとても危険なので、使用する際は十分に注意すること。</detaisl>
+- rm -r：ディレクトリを丸ごと削除できる。※このコマンドはとても危険なので、使用する際は十分に注意すること。</details>
 
 
 <details><summary>#12 シンボリックリンクを作ってみよう</summary>
@@ -850,5 +850,76 @@ touch ファイル名
 書式はコマンド毎に異なるので、「Unix コマンド ln」などで検索してみると良いかと思います。</details>
 
 
-<detaisl><summary>#13 cat,more,lessコマンドを使ってみよう</summary>
+<details><summary>#13 cat,more,lessコマンドを使ってみよう</summary>
 
+- テキストファイルをの中身を見る。
+    - 先ず、etcディレクトリ内のservicesをホームディレクトリにコピーする。コピー先は現在のディレクトリにするため、「.」を使用。
+    
+    ```bash
+    dotinstall:~ $ cp /etc/services . # cpコマンドでetcディレクトリ内のservicesファイルをコピーする。コピー先は「.」、コピー元は/etc/services
+    dotinstall:~ $ ls # lsコマンドでディレクトリを確認する。
+    services # servicesファイルがコピーされている。
+    ```
+    
+    - テキストファイルの中身を見るには cat コマンドを使用する。表示された内容はシステムの設定項目で、理解する必要はないが多くの項目が表示される。
+    
+    ```bash
+    dotinstall:~ $ cat services
+    # Network services, Internet style
+    ...中略
+    # Local services
+    ```
+    
+- そこで、ページごとに見ることができるページャーというコマンドを使用する。
+    - ページャーは2種類。1つは more 。全体の何%なのかを表示してくれる。次のページに進みたい場合は、spaceキーを押す。終了したい場合は、quitという意味のQキーを押せば良い。
+    
+    ```bash
+    dotinstall:~ $ more services # servicesファイルの中身を％で表示してくれる。
+    # Network services, Internet style
+    #
+    # Note that it is presently the policy of IANA to assign a single well-known
+    # port number for both TCP and UDP; hence, officially ports have two entries
+    # even if the protocol doesn't support UDP operations.
+    #
+    # Updated from https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml .
+    #
+    # New ports will be added on request if they have been officially assigned
+    # by IANA and used in the real-world or are needed by a debian package.
+    # If you need a huge list of used numbers please install the nmap package.
+    
+    tcpmux          1/tcp                           # TCP port service multiplexer
+    echo            7/tcp
+    echo            7/udp
+    discard         9/tcp           sink null
+    discard         9/udp           sink null
+    systat          11/tcp          users
+    daytime         13/tcp
+    daytime         13/udp
+    netstat         15/tcp
+    qotd            17/tcp          quote
+    chargen         19/tcp          ttytst source
+    chargen         19/udp          ttytst source
+    ftp-data        20/tcp
+    ftp             21/tcp
+    fsp             21/udp          fspd
+    ssh             22/tcp                          # SSH Remote Login Protocol
+    --More-- (6% of 14464 bytes) # 全体の何%なのかを表示してくれる。次ページに進む場合はspaceキー、終了する場合はQキーを押す。
+    ```
+    
+    - 2つ目のページャー、 less 。 `less ファイル名` とする。more と同様、spaceキーで次ページで進むことができる。また、/の後ろに検索したい単語を入力するとその箇所まで移動する。nextという意味のNキーで次の検索結果まで飛ぶこともできる。終了したい場合はQキー。
+### 質問：more と less の違いはなんですか？
+回答：less は more と違い、前方後方にページ送りができたりと多機能です。
+
+> 動画では、lessには / で検索機能があると紹介されていますが、そのほかにmoreとlessでどのような機能の違いがあるのでしょうか？
+> 
+
+主な違いとしては，`more`は前方にのみページ送りが可能な一方で`less`は前方と後方の両方にページ送りが可能な点があるかと思います。そのほか、検索機能もそうですが`less`のほうが多機能です。
+### 質問：catコマンドとlsコマンドの違いはなんですか？
+回答：lsはファイルの一覧を表示し、catはファイルの中身を表示します。
+
+`ls`はディレクトリにあるファイルやディレクトリを一覧で表示するためのコマンドです。`ls -l` とすると、ファイルの実行権限や所有やサイズなどの情報が表示されるようになります。`ls`はあくまでもディレクトリの中にあるファイルの一覧を表示するためのコマンドなので、ファイルの中身を表示することはできません。
+
+`cat`は上述の通りでファイルの中身を表示してくれます。</details>
+
+
+<details><summary>

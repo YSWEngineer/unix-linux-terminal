@@ -754,3 +754,101 @@ myprofile # mysite から myprofile へと名前が変更していることが�
 
 <details><summary>#12 シンボリックリンクを作ってみよう</summary>
 
+- 少し深い階層を作成する。
+    
+    ```bash
+    dotinstall:~ $ mkdir -p myapp/css/common # mkdirコマンドに-pオプションを付けて一気に作成する。myappディレクトリの中のcssディレクトリの中のcommonファイルがある、という階層を作成。
+    ```
+    
+    - ここでホームディレクトリで作業を行い、今作成したディレクトリによくアクセスするようになった時、毎回毎回全てを打ち込むのは面倒なので、シンボリックリンクという仕組みを使用して別名を付ける。
+        - エイリアスとは、偽名、別名、通称などの意味を持つ英単語。ITの分野では、ある対象や[実体](https://e-words.jp/w/%E3%82%A8%E3%83%B3%E3%83%86%E3%82%A3%E3%83%86%E3%82%A3.html)を、複数の異なるシンボルや[識別子](https://e-words.jp/w/%E8%AD%98%E5%88%A5%E5%AD%90.html)で同じように参照できるする仕組みを指す。別名。
+    - **lnコマンドの書式**
+    
+    ```bash
+    ln オプション ディレクトリ（またはファイル）名 リンク名
+    
+    ln -s myapp/css/common/ mycommon
+    ```
+    
+    ```bash
+    dotinstall:~ $ ln -s myapp/css/common/ mycommon # lnコマンドに-sオプションを付けて、myapp/css/common/をmycommonという名前のシンボリックリンクを作成する。
+    dotinstall:~ $ ls -l # lsコマンドに-lオプションを付けて、ディレクトリの詳細を表示させる。
+    total 4
+    drwxr-sr-x    3 dotinsta wheel         4096 Aug 24 14:02 myapp
+    lrwxrwxrwx    1 dotinsta wheel           17 Aug 24 14:11 mycommon -> myapp/css/common/ # mycommonの実体はmyapp/css/common/であると表示。
+    ```
+    
+    - この mycommonは通常のディレクトリと同様に使用できるので、例えばその中に新しくファイルを作成したい場合、
+        - `touch mycommon/common.css` といった感じで、作成することができる。
+        
+        ```bash
+        dotinstall:~ $ touch mycommon/common.css # mycommonディレクトリ内にcommon.cssという名のファイルを作成。
+        dotinstall:~ $ ls mycommon # lsコマンドでmycommonディレクトリ内を確認。
+        common.css # common.cssファイルが作成されている。
+        ```
+        
+    - また、mycommonディレクトリはmyapp/css/common/と同じなので、`ls myapp/css/common/` でも作成したcommon.cssファイルを表示させることができる。
+    
+    ```bash
+    dotinstall:~ $ ls myapp/css/common/ # lsコマンドでmyapp/css/common/内を確認。
+    common.css # common.cssファイルを確認できた。
+    ```
+    
+
+※`myapp/css/common/`が`/`で終わっているのでわかりにくいかもしれませんが、`/`で終わった場合はディレクトリを指定していると考えると良いと思います。
+
+- シンボリックリンクを削除したい場合、通常のファイルと同様 rm コマンドを使用すれば良い。
+    
+    ```bash
+    dotinstall:~ $ rm mycommon # rmコマンドでシンボリックリンクmycommonを削除する。
+    dotinstall:~ $ ls # lsコマンドでディレクトリを確認する。
+    myapp # シンボリックリンクmycommonは削除され、myappディレクトリだけが残っている。
+    ```
+    
+
+**※シンボリックリンクはディレクトリだけでなく、ファイルにも使用できるので扱いに慣れておくこと。**
+### 質問：新規ファイルやシンボリックマークを作成する際に / のあとに空白を開けない場合があるのはなぜですか？
+**回答：空白で区切る場合はリンク名を指定、スラッシュで区切る場合はディレクトリ名を指定しています。**
+
+**コマンドのルールとして、最初にコマンド名を入力し、スペース区切りでオプションやファイル名などを入力**します。**オプション等はそれぞれコマンド毎に決まっています**。
+
+以下はシンボリックリンクを作成するコマンドですが、
+
+```fortran
+ln -s myapp/css/common/ mycommon
+```
+
+`ln`コマンドの書式は以下のようになっていて、それぞれスペースで区切る必要があります。
+
+```
+ln オプション ディレクトリ（またはファイル）名 リンク名
+
+```
+
+上のコードと照らし合わせると
+
+`-s` ：オプション（シンボリックリンクを作成する意味のオプションです）
+
+`myapp/css/common/`：ディレクトリ名
+
+`mycommon`：リンク名
+
+となります。
+
+`myapp/css/common/mycommon` というファイル名を指定しているのではなく、それぞれ上記の意味になる、というわけですね。
+
+`myapp/css/common/`が`/`で終わっているのでわかりにくいかもしれませんが、`/`で終わった場合は**ディレクトリを指定している**と考えると良いと思います。
+
+一方で、`touch`コマンドの書式は以下のようになっています。
+
+```
+touch ファイル名
+```
+
+ファイル名には作成したいファイル名を指定します。今回は作成したシンボリックリンク`mycommon`の中に`common.css`というファイルを作りたいのですが、ディレクトリからすべて書く必要があるため、`mycommon/common.css`というように記述します。
+
+書式はコマンド毎に異なるので、「Unix コマンド ln」などで検索してみると良いかと思います。</details>
+
+
+<detaisl><summary>#13 cat,more,lessコマンドを使ってみよう</summary>
+

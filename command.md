@@ -752,4 +752,5 @@ myprofile # mysite から myprofile へと名前が変更していることが�
 - rm -r：ディレクトリを丸ごと削除できる。※このコマンドはとても危険なので、使用する際は十分に注意すること。</detaisl>
 
 
-<details><summary>
+<details><summary>#12 シンボリックリンクを作ってみよう</summary>
+

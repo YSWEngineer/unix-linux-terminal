@@ -640,3 +640,109 @@ index.html # about.htmlファイルが削除されていることを確認
 
 
 <details><summary>#10 ディレクトリを操作してみよう</summary>
+
+- 作成したファイルをディレクトリを作成してその中に入れたい場合、
+    - ディレクトリの作成：`mkdir ディレクトリ名` とする。
+
+```bash
+# 事前にindex.htmlファイルを作成した状態でディレクトリを作成する
+dotinstall:~ $ mkdir mysite # mkdir ディレクトリ名 でディレクトリを作成
+dotinstall:~ $ ls
+index.html  mysite
+```
+
+- 作成したファイルをディレクトリに移動させるには、mvコマンドを使用する。
+
+```bash
+dotinstall:~ $ mv index.html mysite/ # index.htmlファイルをmysiteディレクトリに移動させる
+dotinstall:~ $ ls
+mysite # index.htmlファイルはmysiteディレクトリに移動したことが確認できる
+dotinstall:~ $ ls mysite/ # mysiteディレクトリの状態を確認する
+index.html # mysiteディレクトリの中には移動したindex.htmlファイルを確認できる
+```
+
+- ディレクトリの名前を変更したい場合も、mvコマンドを使用する。
+
+```bash
+dotinstall:~ $ mv mysite/ myprofile # mvコマンド 変更したいディレクトリ名 新しいディレクトリ名 の並びでreturnキーを押す
+dotinstall:~ $ ls # ディレクトリを確認
+myprofile # mysite から myprofile へと名前が変更していることがわかる
+```
+
+- ディレクトリの削除は rmdir を使用する。
+    - が、このままでは実行できない。
+    
+    ```bash
+    dotinstall:~ $ rmdir myprofile/ # rmdirコマンドでmyprofileディレクトリを削除する。
+    rmdir: 'myprofile/': Directory not empty # myprofileディレクトリの中身が空ではないため削除できない、と表示。
+    ```
+    
+    - ディレクトリの中にあるファイルを削除してから、ディレクトリを削除する。
+    
+    ```bash
+    dotinstall:~ $ ls myprofile/ # myprofileディレクトリの中身を確認。
+    index.html # myprofileディレクトリ内にindex.htmlファイルがあることを確認。
+    dotinstall:~ $ rm myprofile/index.html # rmコマンドでmyprofileディレクトリの中にあるindex.htmlファイルを削除する。
+    dotinstall:~ $ rmdir myprofile/ # rmdirコマンドでmyprofileディレクトリを削除する。
+    dotinstall:~ $ ls # lsコマンドでディレクトリを確認する。
+    dotinstall:~ $ # ディレクトリが表示されないので、myprofileディレクトリが削除されたことが確認できる。
+    ```
+
+**※ファイルの削除と同様、ディレクトリの削除においても復元することができないので注意すること。**
+### 要点
+- mkdir(make directory)：ディレクトリを作成する。
+- rmdir(remove directory)：ディレクトリを削除する。rmコマンドと異なり、ディレクトリにしか使用できない。また、ディレクトリが空の場合にしか使用できない。</details>
+
+
+<details><summary>#11 深い階層のディレクトリを操作してみよう</summary>
+
+- mysite の中に css ディレクトリを作成してみる。
+    - その場合、一つずつ作成しても良いが、 -p オプションで深い階層まで一気に作成することができる。
+    
+    ```bash
+    dotinstall:~ $ mkdir -p mysite/css # mysiteディレクトリとその中にcssディレクトリを作成する。
+    dotinstall:~ $ ls # lsコマンドでディレクトリを確認する。
+    mysite # mysiteディレクトリを確認。
+    dotinstall:~ $ ls mysite # lsコマンドでmysiteディレクトリ内を確認する。
+    css # cssディレクトリを確認。
+    dotinstall:~ $ ls css # lsコマンドでcssディレクトリを確認。
+    ls: css: No such file or directory # cssディレクトリの中にファイルは何もないと表示。
+    ```
+    
+- cssディレクトリ内にファイルを作成する。
+    
+    ```bash
+    dotinstall:~ $ touch mysite/css/styles.css # touchコマンドでmysiteディレクトリの中のcssディレクトリの中にstyles.cssファイルを作成する。
+    dotinstall:~ $ ls mysite/css # lsコマンドでmysiteディレクトリの中のcssディレクトリの中身を確認。
+    styles.css # styles.cssファイルを確認。
+    ```
+    
+- ここで、mysiteディレクトリを丸ごとコピーしたい場合、
+    - `cp mysite/ myprofile` と書いても実行できない。
+    
+    ```bash
+    dotinstall:~ $ cp mysite/ myprofile # cpコマンドでmysiteディレクトリをコピーし、それをmyprofileと名付ける。
+    cp: omitting directory 'mysite' # (cpコマンドはデフォルトではコピーの対象がファイルだけなので)mysiteディレクトリはomit(除外する)されています、という意味。
+    ```
+    
+    - そこで、サブディレクトリの中身まで一気にコピーするには再帰的を意味する recursive の -r オプションを使用し、`cp -r mysite/ myprofile` と書く。再帰的：自己の行為の結果が自己に戻ってくること。フィードバック。
+    
+    ```bash
+    dotinstall:~ $ cp -r mysite/ myprofile # cpコマンドに -r オプションを付けて実行する。
+    dotinstall:~ $ ls # lsコマンドで確認。
+    myprofile  mysite # myprofile と mysite それぞれのディレクトリを確認。
+    dotinstall:~ $ ls myprofile/css/ # myprofileディレクトリ内にあるcssディレクトリ内を確認。
+    styles.css # cssディレクトリ内にstyles.cssファイルを確認。
+    ```
+    
+- ディレクトリを丸ごと削除したい場合、
+    - あらかじめ、ディレクトリの中身を削除しなくでも rmdir ではなく、 rm コマンドの -r オプションを使用すれば一気に削除することができる。
+    
+    ```bash
+    dotinstall:~ $ rm -r myprofile/ # rmコマンドに-rオプションを付けて、myprofileディレクトリを丸ごと削除する。
+    dotinstall:~ $ ls # lsコマンドでディレクトリを確認。
+    mysite # myprofileディレクトリは削除され、mysiteディレクトリが残っている。
+    ```
+    
+
+※ `rm -r` コマンドは**とても危険なコマンドなので、使用する際は十分注意すること**。

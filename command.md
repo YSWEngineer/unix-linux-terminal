@@ -989,4 +989,131 @@ touch ファイル名
 
 <details><summary>#15 コマンドの履歴を活用してみよう</summary>
 
+- コマンドの履歴について、
+    - historyコマンドはコマンドの履歴を確認することができる。
+        
+        ```bash
+        dotinstall:~ $ history
+            1  ls
+            2  ed /etc/
+            3  ls
+            4  cd /etc/
+            5  pwd
+            6  ls -al
+            7  cat services
+            8  cat alpine-release
+            9  cd
+           10  history
+        ```
+        
+        - 矢印キーの↑でコマンドを遡ることができるが、一気に戻りたい場合、historyコマンドで表示された左側の番号を使用することで移動できる。例えば、5番のコマンドを呼び出したい場合は、`!5`と入力すれば良い。
+            
+            ```bash
+            dotinstall:~ $ history # historyコマンドでコマンドの履歴を表示。
+                1  ls
+                2  ed /etc/
+                3  ls
+                4  cd /etc/
+                5  pwd
+                6  ls -al
+                7  cat services
+                8  cat alpine-release
+                9  cd
+               10  history
+            dotinstall:~ $ !5 # historyコマンドで表示された番号を!と組み合わせてコマンドを呼び出すことができる。
+            pwd # コマンドが呼び出され、
+            /home/dotinstall #コマンドが実行された。
+            ```
+            
+        - 直前のコマンドは `!!` でも実行できる。
+            
+            ```bash
+            dotinstall:~ $ !5
+            pwd
+            /home/dotinstall
+            dotinstall:~ $ !! # !!で直前のコマンドを実行できる。
+            pwd
+            /home/dotinstall
+            ```
+            
+        - `!-2` とすると、二つ前のコマンドを実行することができる。
+            
+            ```bash
+            dotinstall:~ $ !5
+            pwd
+            /home/dotinstall
+            dotinstall:~ $ !!
+            pwd
+            /home/dotinstall
+            dotinstall:~ $ !-2
+            pwd
+            /home/dotinstall
+            ```
+            
+    - 直前のコマンドの引数だけを使用したい場合、例えば、`ls etc` で中身を確認した後、そのディレクトリに移動したいなら `cd etc` で実行してもよいが、直前のコマンドに渡した最後の引数は `!$` で書くことができる。
+        
+        ```bash
+        dotinstall:~ $ ls /etc/
+        alpine-release        logrotate.d           securetty
+        apk                   modprobe.d            services
+        ca-certificates       modules               shadow
+        ca-certificates.conf  modules-load.d        shadow-
+        conf.d                motd                  shells
+        crontabs              mtab                  ssl
+        fstab                 network               sudo.conf
+        group                 opt                   sudo_logsrvd.conf
+        group-                os-release            sudoers
+        hostname              passwd                sudoers.d
+        hosts                 passwd-               sudoers.dist
+        init.d                periodic              sysctl.conf
+        inittab               profile               sysctl.d
+        inputrc               profile.d             terminfo
+        issue                 protocols             udhcpd.conf
+        localtime             resolv.conf
+        dotinstall:~ $ cd !$
+        cd /etc/
+        dotinstall:/etc $
+        ```
+        
+    - !の後ろに pw を入力すると、 pw から始まる直近のコマンドを実行することができる。
+        
+        ```bash
+        dotinstall:/etc $ !pw # pwから始まる直近のコマンドを実行することができる。
+        pwd
+        /etc
+        ```
+        
+    - 記憶が曖昧な場合、最後に :p を付けて実行せずにそのコマンドの表示だけを行うことができる。
+        
+        ```bash
+        dotinstall:/etc $ !pw:p # pwから始まるコマンドの確認ができる。
+        pwd
+        ```
+        
+- 履歴を検索する。
+    - control + R
+        
+        ```bash
+        (reverse-i-search)`': # 表示が変わる。そのまま検索したい文字を入力する。
+        (reverse-i-search)`ca': cat alpine-release
+        ```
+        
+        - 次の候補に行くにはもう一度 control + R を押す。実行したければそのままreturnキーを押す。検索を中断するには control + C を押す。
+            
+            ```bash
+            (reverse-i-search)`ca': cat services # control + R で次の候補へ。
+            
+            (reverse-i-search)`ca': ^Ct services # control + C で検索を中断。
+            dotinstall:/etc $
+            ```
+            
+### 要点
+- history：コマンドの履歴を確認する。
+- !：!の後ろにhistoryコマンドで表示された番号を入力すると、そのコマンドを実行できる。
+- !!：**直前のコマンドを実行する**。
+- !$：直前のコマンドの引数を使用する。
+- :p： `!pw:p` で pw から始まる直近のコマンドを実行せずに表示する。</details>
+
+
+<details><summary>#16 ユーザーとグループの一覧を見てみよう</summary>
 

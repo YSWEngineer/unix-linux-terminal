@@ -1258,4 +1258,50 @@ touch ファイル名
 - x ： execute 、実行可能<details>
 
 
-<details><summary>
+<details><summary>#18 chmodコマンドの使い方を理解しよう</summary>
+
+- 以下のアクセス権( -rw-r--r-- )は、chmod(change mode)コマンドで変更することができます。その際 `rw-` の 3 文字は user の u 、次の 3 文字 `r--` は group の g 、 最後の 3 文字 `r--` は other の o 、もしくは9文字全てを all の a で扱うことができます。
+    
+    ```bash
+    rw-r--r--    1 dotinsta wheel            0 Aug 25 15:36 index.html
+    ```
+    
+    - 9文字全ての権限を `rwxrwxrwx` として一気に付けたかった場合、全てに対してなので a に対して = を使用して以下のように書きます。
+        
+        ```bash
+        rwx rwx rwx   chmod a=rwxrwxrwx index.html
+        ```
+        
+    - 若しくは `rwxrwxrwx` から `rwxrw-rw-` にしたい場合、group と other の権限を rw だけにすればいいので、以下のように書きます。
+        
+        ```bash
+        rwx rw- rw-   chmod g=rw,o=rw index.html
+        ```
+        
+    - さらに `rwxrwxrwx` から `rwxrwxr--` にしたい場合、+ や - で権限を追加したり、削除することもできて、 g に x を足す、 o から w を引くという操作になるので、以下のように書きます。
+        
+        ```bash
+        rwx rwx r--   chmod g+x,o-w index.html
+        ```
+        
+- それぞれの3文字を数値で表現することができます。**右から 2 の 0 乗、 2 の 1 乗、 2 の 2 乗で表現できる**ので、たとえばこういった権限を作りたい場合、 rwx は右から 1 2 4 になるので合計で 7 。**※2の0乗は、「1」になる。ということを理屈抜きで覚えておこう**。
+    
+    ```bash
+    rwx
+    # x = 2の0乗、w = 2の1乗、r = 2の2乗、で表現できる。
+    # よって、rwxは右から、x = 1、w = 2、r = 4、となるので合計で7。
+    
+    rwx rwx rwx   chmod 777 index.html # rwx = 7で、それが3つあるので777、となる。
+    
+    # 以下のような権限を設定したい場合
+    rws rw- rw-   chmod 766 index.html # rws = 4+2+1 = 7、rw- = 4+2+0 = 6、rw- = 4+2+0 = 6、よって766、となる。
+    
+    # 以下のような権限を設定したい場合
+    rwx rwx r--   chmod # rws = 4+2+1 = 7、rws = 4+2+1 = 7、r-- = 4+0+0 = 4、よって774、となる。
+    ```
+
+</details>
+
+
+<details><summary>#19 アクセス権限を変更してみよう</summary>
+

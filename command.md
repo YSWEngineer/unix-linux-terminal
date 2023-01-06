@@ -1562,9 +1562,54 @@ viを使ってテキストファイルを作成する方法について見てい
 
 - #!：シェバンと呼ばれていて、これがあったら次に続くプログラムで実行しなさい、という意味。
 - :qw：(コマンドモード時に入力すること)変更を保存してviエディターを終了する。
-- :q!：(コマンドモード時に入力すること)変更を保存せずにviエディターを終了する。
+- :q!：(コマンドモード時に入力すること)変更を保存せずにviエディターを終了する。</details>
 
 
 <details><summary>#23 ファイルを実行してみよう</summary>
+
+- 以下のファイルにはどこにも実行権限がついていないので、所有者が実行できるように設定します。
+    
+    ```bash
+    dotinstall:~ $ ls -l # lsコマンドに-lオプションを付けて、ファイルの詳細を表示する。
+    total 4
+    -rw-r--r--    1 dotinsta wheel           31 Aug 26 16:19 hello # helloファイルには実行可能を意味するe(execute)がない。
+    
+    dotinstall:~ $ chmod u+x hello # chmodコマンドで、userにx(executo)の権限を付け加える。
+    dotinstall:~ $ ls -l # lsコマンドに-lオプションを付けて、helloファイルの詳細を表示する。
+    total 4
+    -rwxr--r--    1 dotinsta wheel           31 Aug 26 21:05 hello # userにx(executo)権限が付与されている。
+    ```
+    
+    - これを実行するには、今いるhelloファイルを実行するように入力する→ `./hello`
+        
+        ```bash
+        dotinstall:~ $ ./hello # .は現在いる場所。/helloはhelloファイルを意味する。
+        Hello there! # viエディターで編集した文字列が表示される。
+        ```
+        
+    - この、 ./hello コマンドはディレクトリを指定せずに単に hello とだけ打ってもうまくいきません。これは UNIX ではコマンドを検索するディレクトリが決められているからで、そのディレクトリ以外にあるコマンドを実行したい場合、そのファイルがどこにあるか指定する必要があるからです。
+        
+        ```bash
+        dotinstall:~ $ hello # helloだけで実行する。
+        bash: hello: command not found # そのようなコマンドは見つかりません、と表示。
+        ```
+        
+    - コマンドをどこから検索しているかですが、環境変数という仕組みで管理されていて、 `echo $PATH` で見ることができます。PATH が環境変数の名前で $ が環境変数の中身を表すので、このようにすると、環境変数の中身を出力します。たくさんのディレクトリがコロンで区切られて登録されていて、コマンドを実行する際にはこれらのディレクトリを先頭から探していくという仕組みになっています。
+        
+        ```bash
+        dotinstall:~ $ echo $PATH # 環境変数の中身を表示する。PATHは環境変数の名前、$は環境変数の中身を示す。
+        /usr/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        ```
+        
+### 要点
+実行権限のあるファイルを実行する方法について見たのち、環境変数という仕組みについて学んでいきます。
+
+- ./hello：今いるディレクトリの hello を実行せよ、という意味。※hello だけだと実行されずエラーが表示される。
+- echo $PATH：環境変数という仕組みを確認する。
+    - echo は画面に文字列や数値、変数を表示するコマンド。
+    - PATH が環境変数の名前、$ が環境変数の中身を表す。</details>
+
+
+<details><summary>#24 PATHの設定をしてみよう</summary>
 
 

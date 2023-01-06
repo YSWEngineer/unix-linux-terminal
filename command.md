@@ -1255,7 +1255,7 @@ touch ファイル名
 ### 要点
 - r ： read 、読み取り可能
 - w ： write 、書き込み可能
-- x ： execute 、実行可能<details>
+- x ： execute 、実行可能</details>
 
 
 <details><summary>#18 chmodコマンドの使い方を理解しよう</summary>
@@ -1305,3 +1305,59 @@ touch ファイル名
 
 <details><summary>#19 アクセス権限を変更してみよう</summary>
 
+- アクセス権限を変更してみよう。
+    - 先ずファイルを作成し、`ls -l` で確認する。
+        
+        ```bash
+        dotinstall:~ $ touch index.html # (ファイルがないので)touchコマンドでファイルを作成する。
+        dotinstall:~ $ ls -l # lsコマンドに-lオプションで作成したindex.htmlファイルの詳細を表示する。
+        total 0
+        -rw-r--r--    1 dotinsta wheel            0 Aug 26 13:44 index.html
+        ```
+        
+    - ここで、全ての権限を与えます。 chmod コマンドを使用して、全てに対して全ての権限と書く。
+        
+        ```bash
+        dotinstall:~ $ chmod a=rwxrwxrwx index.html # chmodコマンドで全てに対して全ての権限を与える。
+        dotinstall:~ $ ls -l # lsコマンドに-lオプションでindex.htmlファイルの詳細を表示。
+        total 0
+        -rwxrwxrwx    1 dotinsta wheel            0 Aug 26 13:44 index.html # アクセス権が変更されたことが確認できる。
+        ```
+        
+    - この状態から g に関しては rw だけ、そして o に関しては r だけにしてみます。chmod コマンドを使って、 g に関しては rw 、 o に関しては r だけとしてあげればいいでしょう。
+        
+        ```bash
+        dotinstall:~ $ chmod g=rw,o=r index.html # chmodコマンドでg=rw、o=rにする。
+        dotinstall:~ $ ls -l # lsコマンドに-lオプションでindex.htmlファイルの詳細を表示。
+        total 0
+        -rwxrw-r--    1 dotinsta wheel            0 Aug 26 13:44 index.html # アクセス権が変更されたことを確認。
+        ```
+        
+    - 次にこの状態から g には x 権限を加えて、 o からは r 権限を外してみます。+ や - を使って、 g には x 、 o には r を引いてあげましょう。
+        
+        ```bash
+        dotinstall:~ $ chmod g+x,o-r index.html
+        dotinstall:~ $ ls -l
+        total 0
+        -rwxrwx---    1 dotinsta wheel            0 Aug 26 14:53 index.html
+        ```
+        
+    - ここで全てを rw だけにしたかった場合、数値で表すと、右から 0 2 4 になるので、全てを 6 にしてあげればいいでしょう。
+        
+        ```bash
+        dotinstall:~ $ chmod 666 index.html
+        dotinstall:~ $ ls -l
+        total 0
+        -rw-rw-rw-    1 dotinsta wheel            0 Aug 26 14:53 index.html
+        ```
+        
+
+**※こうしたアクセス権の操作もできるようになっておきましょう。**
+### 要点
+- chmod a=rwxrwxrwx index.html
+- chmod g=rw,o=r index.html
+- chmod g+x,o-r index.html
+- chmod 666 index.html</details>
+
+
+<details><summary>

@@ -2002,3 +2002,61 @@ viを使ってテキストファイルを作成する方法について見てい
 - ワイルドカードとの組み合わせ：`test -name 'app1*'`
 - type f：`find 場所を指定 -nameオプション 検索したいディレクトリの名前 -type f` 、ファイルだけを検索してくれる。
 - type d：`find 場所を指定 -nameオプション 検索したいディレクトリの名前 -type d`、ディレクトリだけを検索してくれる。</details>
+
+
+# 💻 ドットインストール シェルスクリプト入門
+### Unixのコマンドをまとめて実行できるシェルスクリプトについて学んでいきます。 
+
+<details><summary>#01 シェルスクリプトを使ってみよう(レッスンを受けるためのローカル開発環境が必要なので、準備が要る)</summary>
+
+- Unix を操作していると、よく行う処理をまとめたくなる場合があります。今回のレッスンでは、そうした場合に使えるシェルスクリプトについて見ていきます。
+    - その前に shellscript_lessons という名前のディレクトリを作成。
+        1. Desktop からフォルダを新規作成。名前は shellscript_lessons 。
+        2. ターミナルまたは iTerm でプロンプトを作成した shellscript_lessons に移動。
+        3. Visual Studio Code を起動→ファイルタブからフォルダーを開くをクリック→先ほど作成した shellscript_lessons ディレクトリを選択→shellscript_lessons ディレクトリから新しいファイルをクリック→hello という名前で新しくファイルを作成。
+        4. 編集しやすいようにモードを変更する。
+        5. Visual Studio Code 下部にある「プレーンテキスト」をクリックしてモードの変更を行う。
+        6. モードは「Shell Script」を選択。
+				7. ここまでできれば、Visual Studio Code にいろいろなコマンドを書きながらレッスンを進むことができる。
+- 準備したVisual Studio Code にいろいろなコマンドを書いていくのですが、その前にコマンドを実行するためのプログラムを1行目で指定します。
+    1. `#!` (シェバンまたはシバン)を入力。
+    2. シェルで `which bash` を入力、実行して、表示された `/bin/bash` をコピーして#!の後ろに貼り付ける。
+        
+        ```bash
+        #!/bin/bash
+        
+        echo hello
+        ```
+        
+- これを保存して実行したいのですが、 ls -l で確認すると実行権限(execute)がないことがわかります。
+    
+    そこで、 `chmod +x hello` で実行権限(execute)を与えます。
+    
+    実行するのですが、 shellscript_lessons ディレクトリはコマンドの実行PATH に含まれていないので、 `./hello` と書きます。
+    
+    ```bash
+    % ls -l # (lsコマンドに-lオプションを付けて)ディレクトリの詳細を表示せよ。
+    total 8
+    -rw-r--r--  1 yoshiwo  staff  23  8 29 16:51 hello # userの権限がr(読み取り)とw(書き込み)の2つだけ。
+    
+    % chmod +x hello # (chmodコマンドでexecuteの権限を付与する)ユーザーに実行権限(execute)を付与せよ。
+    % ls -l
+    total 8
+    -rwxrwxr-x  1 yoshiwo  staff  23  8 29 16:51 hello
+    
+    % ./hello # shellscript_lessonsディレクトリはコマンドの実行PATHに含まれていないため、./helloと書く。
+    hello # 文字列helloが表示される。
+    ```
+
+※シンプルな例ですが、先ずはこのような流れに慣れておいてください。
+### 要点
+簡単なシェルスクリプトを作って実行するところまでを見ていきます。
+
+- シェルスクリプトの作成：shellscript ディレクトリの作成→hello ファイルの作成→Visual Studio Code のモードをShellScript に変更。
+- 実行権限の付与：chmod コマンドを使用して、ユーザーに実行権限(execute)を付与する。
+- シェルスクリプトの実行：shellscript ディレクトリにはコマンドの実行PATH に含まれていないので、`./hello` で実行する。
+	- ./hello で今いるディレクトリの中のhelloを実行せよ、という意味になる。</details>
+
+
+<details><summary>#02 文字列を表示してみよう</summary>
+

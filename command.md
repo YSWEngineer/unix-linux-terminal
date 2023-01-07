@@ -1752,3 +1752,99 @@ viを使ってテキストファイルを作成する方法について見てい
 - >>：末尾に追記することができる。
 - <：ファイルの内容をコマンドに流し込む。
   - これらの記号は、リダイレクションと呼ぶ。</details>
+
+
+<details><summary>#26 パイプを使ってみよう</details>
+
+- コマンドの実行結果をファイルではなくて、別のコマンドに渡す方法について。
+    - パイプという仕組みについて。
+        - たとえば `ls -l /etc` とすると、以下のような結果になりますが、この中から sudo という文字列が含まれる行を抜き出したかったとしましょう。その場合 `grep` と合わせて使いたいのですが、パイプを使うにはコマンドのあとに `|` を入力して、その後ろに渡したいコマンドを書きます。
+            
+            ```bash
+            dotinstall:~ $ ls -l /etc/ # (lsコマンドに-lオプションを付けて)etcディレクトリの詳細を表示せよ。
+            total 208
+            -rw-r--r--    1 root     root             7 May 29  2020 alpine-release
+            drwxr-xr-x    1 root     root          4096 Sep 23  2020 apk
+            drwxr-xr-x    3 root     root          4096 Sep 23  2020 ca-certificates
+            -rw-r--r--    1 root     root          5613 Jun 18  2020 ca-certificates.conf
+            drwxr-xr-x    2 root     root          4096 May 29  2020 conf.d
+            drwxr-xr-x    2 root     root          4096 May 29  2020 crontabs
+            -rw-r--r--    1 root     root            89 May 29  2020 fstab
+            -rw-r--r--    1 root     root           693 Sep 23  2020 group
+            -rw-r--r--    1 root     root           682 May 29  2020 group-
+            -rw-r--r--    1 root     root            13 Aug 27 13:17 hostname
+            -rw-r--r--    1 root     root           178 Aug 27 13:17 hosts
+            drwxr-xr-x    2 root     root          4096 May 29  2020 init.d
+            -rw-r--r--    1 root     root           570 May 29  2020 inittab
+            -rw-r--r--    1 root     root          1748 Feb  9  2020 inputrc
+            -rw-r--r--    1 root     root            54 May 29  2020 issue
+            -rw-r--r--    1 root     root           309 Aug  9  2020 localtime
+            drwxr-xr-x    2 root     root          4096 May 29  2020 logrotate.d
+            drwxr-xr-x    2 root     root          4096 May 29  2020 modprobe.d
+            -rw-r--r--    1 root     root            15 May 29  2020 modules
+            drwxr-xr-x    2 root     root          4096 May 29  2020 modules-load.d
+            -rw-r--r--    1 root     root           283 May 29  2020 motd
+            lrwxrwxrwx    1 root     root            12 Aug 27 13:17 mtab -> /proc/mounts
+            drwxr-xr-x    8 root     root          4096 May 29  2020 network
+            drwxr-xr-x    2 root     root          4096 May 29  2020 opt
+            -rw-r--r--    1 root     root           164 May 29  2020 os-release
+            -rw-r--r--    1 root     root          1233 Sep 23  2020 passwd
+            -rw-r--r--    1 root     root          1172 May 29  2020 passwd-
+            drwxr-xr-x    7 root     root          4096 May 29  2020 periodic
+            -rw-r--r--    1 root     root           238 May 29  2020 profile
+            drwxr-xr-x    1 root     root          4096 Sep 23  2020 profile.d
+            -rw-r--r--    1 root     root          1865 May 29  2020 protocols
+            -rw-r--r--    1 root     root            54 Aug 27 13:17 resolv.conf
+            -rw-r--r--    1 root     root            65 May 22  2020 securetty
+            -rw-r--r--    1 root     root         14464 May 29  2020 services
+            -rw-r-----    1 root     shadow         454 Sep 23  2020 shadow
+            -rw-r-----    1 root     shadow         422 May 29  2020 shadow-
+            -rw-r--r--    1 root     root            48 Sep 23  2020 shells
+            drwxr-xr-x    1 root     root          4096 May 29  2020 ssl
+            -rw-r--r--    1 root     root          3941 May 25  2020 sudo.conf
+            -rw-r--r--    1 root     root          6169 May 25  2020 sudo_logsrvd.conf
+            -rw-r--r--    1 root     root          3228 Sep 23  2020 sudoers
+            drwxr-x---    2 root     root          4096 Sep 23  2020 sudoers.d
+            -r--r-----    1 root     root          3174 May 25  2020 sudoers.dist
+            -rw-r--r--    1 root     root            53 May 29  2020 sysctl.conf
+            drwxr-xr-x    2 root     root          4096 May 29  2020 sysctl.d
+            drwxr-xr-x   13 root     root          4096 Sep 23  2020 terminfo
+            -rw-r--r--    1 root     root          5306 May 22  2020 udhcpd.conf
+            dotinstall:~ $ ls -l /etc/ | grep 'sudo' # ls -l /etc/コマンドの後に|、その後に渡したいコマンドを入力する。
+            -rw-r--r--    1 root     root          3941 May 25  2020 sudo.conf
+            -rw-r--r--    1 root     root          6169 May 25  2020 sudo_logsrvd.conf
+            -rw-r--r--    1 root     root          3228 Sep 23  2020 sudoers
+            drwxr-x---    2 root     root          4096 Sep 23  2020 sudoers.d
+            -r--r-----    1 root     root          3174 May 25  2020 sudoers.dist
+            ```
+            
+        - パイプは組み合わせることができて、さらにそのあとにパイプを使って `wc -l` としてみましょう。結果の行数を返してくれます。
+            
+            ```bash
+            -rw-r--r--    1 root     root          3941 May 25  2020 sudo.conf
+            -rw-r--r--    1 root     root          6169 May 25  2020 sudo_logsrvd.conf
+            -rw-r--r--    1 root     root          3228 Sep 23  2020 sudoers
+            drwxr-x---    2 root     root          4096 Sep 23  2020 sudoers.d
+            -r--r-----    1 root     root          3174 May 25  2020 sudoers.dist
+            dotinstall:~ $ ls -l /etc/ | grep 'sudo' | wc -l # 検索結果の数を行数で表示せよ。
+            5
+            ```
+            
+        - 前回見たリダイレクションと組み合わせることもできるので、たとえば results.txt というファイルに結果を書き出したい場合は以下のように入力します。
+            
+            ```bash
+            dotinstall:~ $ ls -l /etc/ | grep 'sudo' | wc -l > results.txt # wc -lで得た結果をresultx.txtファイルに書き出せ。
+            dotinstall:~ $ cat results.txt # (catコマンドで)results.txtファイルの中身を表示せよ。
+            5
+            ```
+
+※UNIX ではこのようにパイプやリダイレクションを組み合わせることで複雑な処理を行うこともできるので、慣れておくといいでしょう。
+### 要点
+コマンドの実行結果を、別のコマンドに渡すためのパイプという仕組みについて見ていきます。
+
+- |(パイプ)：コマンドの実行結果を別のコマンドに渡す。
+- リダイレクションとの組み合わせ：コマンドの実行結果をファイルに書き出すことができる。
+  - パイプやリダイレクションを組み合わせることで複雑な処理を行うこともできる。</details>
+
+
+<details><summary>

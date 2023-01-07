@@ -1612,4 +1612,48 @@ viを使ってテキストファイルを作成する方法について見てい
 
 <details><summary>#24 PATHの設定をしてみよう</summary>
 
+- 前回見た $PATH にホームディレクトリを追加します。
+    - 今のディレクトリのこちら(dotinstall)を現在ある $PATH の先頭に加えるには記号を間違えないように打って欲しいのですが、 export PATH=/home/dotinstall:$PATH のようにしてあげてください。このコマンドの export は環境変数を設定するための命令で、 PATH という名前でこのディレクトリ(dotinstall)と、既に設定されている $PATH の内容を繋げて設定しなさい、という意味です。PATH は環境変数の内容なので $ が付く点に注意してください。
+        
+        ```bash
+        dotinstall:~ $ pwd # pwdコマンドで今いるディレクトリを表示する。
+        /home/dotinstall # 現在いるディレクトリが表示。
+        dotinstall:~ $ export PATH=/home/dotinstall:$PATH # exportコマンドでPATHという名前でdotinstallディレクトリと既に設定されている$PATHの内容を紐付けせよ。
+        dotinstall:~ $ echo $PATH # echoコマンドで$PATHの内容を表示する。
+        /home/dotinstall:/usr/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        # ↑先頭に /home/dotinstall ディレクトリが追加されていることが確認できる。
+        ```
+        
+    - このように特定のディレクトリを $PATH に加えることをパスを通すというのですが、これで単に hello と実行しても OK です。
+        
+        ```bash
+        dotinstall:~ $ hello # helloだけで実行する。
+        Hello there! # 設定したスクリプトが表示される。
+        ```
+        
+    - また、どこから実行してもいいはずなので、ひとつ上のディレクトリに移動してから hello としてみましょう。
+        
+        ```bash
+        dotinstall:~ $ cd .. # cdコマンドはディレクトリに移動する。 ..は一つ上のディレクトリに移動する。
+        dotinstall:/home $ hello # プロンプトには一つ上の階層のhomeディレクトリが表示され、helloでコマンドを実行する。
+        Hello there! # 設定したプロンプトが表示される。
+        ```
+        
+    - ちなみに、実行しようとしているコマンドがどこのディレクトリから呼び出されているかは which コマンドで調べることができます。実行したコマンドが期待通りの動作をしない場合、違うパスのコマンドを実行していたりするので、そうしたときは which で調べてあげるといいでしょう。
+        
+        ```bash
+        dotinstall:/home $ which hello # whichコマンドで実行しているコマンド(hello)がどこのディレクトリから呼び出されているかを調べる。
+        /home/dotinstall/hello # helloコマンドがhomeディレクトリの中のdotinstallディレクトリの中から呼び出されていることがわかる。
+        ```
+        
+    - 今回設定したこちらの $PATH ですが、実はログアウトすると `/home/doiinstall:` が元に戻ってしまいます。ログアウトしてもそうならないように設定もできるのですが、慣れないうちはあまりいじらない方が良いでしょう。今の時点では $PATH という環境変数があって、シェルはそこからコマンドを探しているのだよ、という仕組みだけを理解するようにしておいてください。
+### 要点
+環境変数を設定し、どのディレクトリからも hello を実行できるようにしてみます。
+
+- export：環境変数やシェル変数を設定するコマンド。
+- which：実行しようとしているコマンドがどこのディレクトリから呼び出されているかを調べてくれるコマンド。</details>
+
+
+<details><summary>#25 リダイレクションを使ってみよう</summary>
+
 

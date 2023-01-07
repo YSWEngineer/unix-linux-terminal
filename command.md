@@ -1847,4 +1847,75 @@ viを使ってテキストファイルを作成する方法について見てい
   - パイプやリダイレクションを組み合わせることで複雑な処理を行うこともできる。</details>
 
 
-<details><summary>
+<details><summary>#27 ブレース展開を使ってみよう</summary>
+
+- 今回使っているシェルではブレース展開という機能が使えるので見ていきましょう。
+    - ブレースとは波括弧のことです。たとえば `echo {a,b,c}` とすると、それを展開してくれます。
+        
+        ```bash
+        dotinstall:~ $ echo {a,b,c}
+        a b c
+        ```
+        
+    - さらに連続する値も表現することができて、 `echo {1..10}` とすると 1 から 10 、さらにアルフベットを組み合わせたいのだったら `{a..g}` とすると、数式のように組み合わせて展開します。
+        
+        ```bash
+        dotinstall:~ $ echo {1..10}{a..g}
+        1a 1b 1c 1d 1e 1f 1g 2a 2b 2c 2d 2e 2f 2g 3a 3b 3c 3d 3e 3f 3g 4a 4b 4c 4d 4e 4f 4g
+        5a 5b 5c 5d 5e 5f 5g 6a 6b 6c 6d 6e 6f 6g 7a 7b 7c 7d 7e 7f 7g 8a 8b 8c 8d 8e 8f 8g
+        9a 9b 9c 9d 9e 9f 9g 10a 10b 10c 10d 10e 10f 10g
+        ```
+        
+    - これを知っておくと色々便利なので、練習用のフォルダを作って試してみましょう。
+        
+        ちなみに、ふたつのコマンドを連続して実行したい場合は `mkdir test` のようにひとつのコマンドを書いてあげて、それが成功したら次のコマンドを実行したい場合、 `&&` (アンパサンド2つ)で次のコマンド、と書いてあげます。
+        
+        ```bash
+        dotinstall:~ $ mkdir test && cd test # mkdirコマンドでtestファイルを作成し、続けて、testファイルに移動せよ。
+        dotinstall:~/test $ # testファイルが作成され、さらにtestファイルに移動した。そのためプロンプトの内容が変わっている。
+        ```
+        
+    - ブレース展開を使用して一気にディレクトリを作成します。`mkdir app{1..5}` としてあげると、 app1 から app5 までが作られます。
+        
+        ```bash
+        dotinstall:~/test $ mkdir app{1..5} # mkdirコマンドでappディレクトリを作成しその中身にはapp1からapp5までが作成されるようにしろ。。
+        dotinstall:~/test $ ls
+        app1  app2  app3  app4  app5
+        ```
+        
+    - それぞれのディレクトリの中にたくさんのファイルを一気に作成します。touch コマンドを使ってあげて、 `app{1..5}/test{1..3}{.jpg,.png,.gif}` と書いてみましょう。これを実行してあげると、 app1 から 5 の中に test1 から test3 でそれぞれの拡張子がついたファイルができます。
+        
+        ```bash
+        dotinstall:~/test $ touch app{1..5}/test{1..3}{.jpg,.png,.gif} # app1からapp5の中にtest1からtest3でそれぞれの拡張子がついたファイルを作成する。
+        dotinstall:~/test $ ls app2 # app2ファイルの中身を確認せよ。
+        test1.gif  test1.png  test2.jpg  test3.gif  test3.png # test1からtest3に拡張値がそれぞれ付いている。
+        test1.jpg  test2.gif  test2.png  test3.jpg
+        ```
+        
+    - ↑この中から .jpg と .gif だけを削除したいなら、同じようにブレース展開が使えて、 `rm app{1..5}/test{1..3}{.jpg,.gif}` と書きます。
+        
+        ```bash
+        dotinstall:~/test $ rm app{1..5}/test{1..3}{.jpg,.gif} # app1からapp5の中のtest1からtest3の.jpgと.gifを削除せよ。
+        dotinstall:~/test $ ls app2 # (lsコマンドでファイルの中身を確認)app2ファイルの中身を確認せよ。
+        test1.png  test2.png  test3.png # .jpgと.gifが削除され、.pngが残っている。
+        ```
+        
+    - 最後に、一旦 cd でホームディレクトリに戻り、 test ディレクトリの中身は一気に消します。
+        
+        ```bash
+        dotinstall:~/test $ cd # (cdコマンドでディレクトリに戻る)ホームディレクトリに戻れ。
+        dotinstall:~ $ rm -r test/ # (rmコマンドに-rオプションを付けてディレクトリを丸ごと削除する)testファイルを削除せよ。
+        ```
+        
+
+※このようにブレース展開を使えばかなり複雑なことも一気にできるようになるので、使いこなせるようになっておくといいでしょう。
+### 要点
+シェルで使えるブレース展開について解説していきます。
+
+- {}：ブレースと呼び、波括弧を意味する。
+- &&：二つのコマンドを連続して実行したい場合に使用する。</details>
+
+
+<details><summary>#28 findでファイルを検索しよう</summary>
+
+

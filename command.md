@@ -2073,7 +2073,7 @@ viを使ってテキストファイルを作成する方法について見てい
             
             echo "foo"; echo "bar"
             
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            % ./hello
             hello world
             hello world
             foo
@@ -2092,4 +2092,123 @@ viを使ってテキストファイルを作成する方法について見てい
 
 
 <details><summary>#03 変数を使ってみよう</summary>
+
+- 以下の文字列のうち、名前だけを変更したかった場合を考えます。
+    
+    ```bash
+    #!/bin/bash
+    
+    echo "morning taguchi"
+    echo 'hello taguchi'
+    echo 'hello taguchi'
+    
+    % ./hello
+    morning taguchi
+    hello taguchi
+    hello taguchi
+    ```
+    
+    - 1つずつ変更しても良いのですが、数が増えてきたら大変です。そうした場合に、値(今回は名前)を1箇所で管理できたら便利です。そのために使えるのが変数です。変数は値に付けるラベルのようなもので、ラベルの書かれた名前で演算をしたり、使いまわしたりすることができるので見ていきます。
+        - taguchi という文字列を name という変数に割り当てます。
+            
+            ここで幾つか注意すべき点があります。
+            
+            1. 変数名は、英数字か _ (アンダーバー)しか使用できません。
+            2. 大文字小文字は区別されます。
+            3. 一番間違えやすいのですが、 `name = “taguchi”` のようにスペースを入れてしまうとエラーになります。値を割り当てるには、必ず、 = の前後に空白がないようにしてください。
+            
+            割り当てたら、 taguchi という値の代わりに name を使用します。
+            
+        - 割り当てた変数を使用するには、 $ の後に変数名を付けます。こうすることで、 taguchi と全く同じ意味になります。
+            - 例えば `echo “bye$namesan"` のように、変数の後に文字が続く場合は、どこまでが変数名なのか分かりにくいです。その場合は `echo “bye ${name}san”` のように { } で囲うことで、変数を示すことができるので、どちらの書き方でもできるようにしましょう。
+                
+                ```bash
+                #!/bin/bash
+                # 変数
+                
+                # name = "taguchi"
+                name="taguchi"
+                
+                # echo "morning taguchi"
+                # echo "hello taguchi"
+                # echo "hello taguchi"
+                echo "morning $name"
+                echo "hello $name"
+                echo "hello ${name}san"
+                
+                % ./hello
+                morning taguchi
+                hello taguchi
+                hello taguchisan
+                
+                # 変数の値を書き換えると結果が変わる
+                #!/bin/bash
+                # 変数
+                
+                # name = "taguchi"
+                # name="taguchi"
+                name="fkoji"
+                
+                # echo "morning taguchi"
+                # echo "hello taguchi"
+                # echo "hello taguchi"
+                echo "morning $name"
+                echo "hello $name"
+                echo "hello ${name}san"
+                
+                % ./hello
+                morning fkoji
+                hello fkoji
+                hello fkojisan
+                ```
+                
+        - ちなみに内容を書き換えてほしくない変数を作成したいときには、 readonly というキーワードを付けます。
+            
+            ```bash
+            readonly name="fkoji"
+            name="dotinstall"
+            
+            # echo "morning taguchi"
+            # echo "hello taguchi"
+            # echo "hello taguchi"
+            echo "morning $name"
+            echo "hello $name"
+            echo "hello ${name}san"
+            
+            % ./hello
+            ./hello: line 7: name: readonly variable # 7行目変数nameのエラー、読み込みのみの変数が可能。
+            morning fkoji
+            hello fkoji
+            hello fkojisan
+            ```
+            
+- ‘ (シングルクォーテーション)と “ (ダブルクォーテーション)で囲んだ時の違いについて。
+    - ‘ (シングルクォーテーション)を使用すると変数の中身が展開されません。そのまま表示されてしまいます。こういった挙動の違いも理解しましょう。
+        
+        ```bash
+        echo "morning $name"
+        echo "hello $name"
+        echo "hello ${name}san"
+        echo 'hello ${name}san'
+        
+        % ./hello
+        morning fkoji
+        hello fkoji
+        hello fkojisan
+        hello ${name}san # '(シングルクォーテーション)で囲った場合は、そのまま表示されてしまう。
+        ```
+
+### 要点
+データに名前を付けられる変数の使い方について見ていきます。
+
+- 変数の付け方：`変数=値` とする。
+    - 変数名は、英数字か _ (アンダーバー)しか使用できません。
+    - 大文字小文字は区別されます。
+    - 一番間違えやすいのですが、 `name = “taguchi”` のようにスペースを入れてしまうとエラーになります。値を割り当てるには、必ず、 = の前後に空白がないようにしてください。
+- 値の取り出し方：$の後に変数名を付けること。
+    - 今回の場合は `$name` 。
+    - それ以外にも文字列と変数を分けるため、変数を { } で囲う方法がある。 `${name}san`</details>
+
+
+<details><summary>#04 特殊変数を使ってみよう</summary>
 

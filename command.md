@@ -1754,7 +1754,7 @@ viを使ってテキストファイルを作成する方法について見てい
   - これらの記号は、リダイレクションと呼ぶ。</details>
 
 
-<details><summary>#26 パイプを使ってみよう</details>
+<details><summary>#26 パイプを使ってみよう</summary>
 
 - コマンドの実行結果をファイルではなくて、別のコマンドに渡す方法について。
     - パイプという仕組みについて。
@@ -1918,4 +1918,87 @@ viを使ってテキストファイルを作成する方法について見てい
 
 <details><summary>#28 findでファイルを検索しよう</summary>
 
+- ファイルの検索について見ていきますが、事前にブレース展開で幾つかファイルを作ります。
+    - mkdir -p で test ディレクトリ内に app1 から app5 を作成する。
+        
+        その中にさらにファイルを作成する。
+        
+        ```bash
+        dotinstall:~ $ mkdir -p test/app{1..5} # (mkdirコマンドに-pオプションを付けて、深い階層までディレクトリを作成する)testディレクトリ内にapp1からapp5までを作成せよ。
+        
+        dotinstall:~ $ touch test/app{1..5}/app{1..3}{.jpg,.png,.gif} # (touchコマンドでファイルを作成する)app1からapp5までを作成し、それぞれのファイルにはapp1からapp3まではそれぞれの拡張子を付けたものにせよ。。
+        dotinstall:~ $ ls test # (lsコマンドでディレクトリの中身を確認)testディレクトリの中身を確認せよ。
+        app1  app2  app3  app4  app5 # testディレクトリの中身にはapp1からapp5までが作成されている。
+        dotinstall:~ $ ls test/app1 # (lsコマンドでディレクトリの中身を確認)testディレクトリの中のapp1ファイルの中身を確認せよ。
+        app1.gif  app1.png  app2.jpg  app3.gif  app3.png
+        app1.jpg  app2.gif  app2.png  app3.jpg
+        ```
+        
+    - ↑ここから app3.png を検索します。検索するには find コマンドを使用する。 `find 場所を指定 -nameオプション 検索したいディレクトリの名前` と書く。
+        
+        ```bash
+        dotinstall:~ $ find test -name 'app3.png' # (findコマンド、場所を指定(test)、-nameオプション、検索したいディレクトリ名)testディレクトリの中のapp3.pngファイルを検索せよ。
+        test/app1/app3.png
+        test/app2/app3.png
+        test/app3/app3.png
+        test/app4/app3.png
+        test/app5/app3.png
+        ```
+        
+    - ワイルドカードも使えるので、 `test -name 'app1*'` といった書き方もできます。
+        
+        ```bash
+        dotinstall:~ $ find test -name 'app1*' # testディレクトリの中にapp1という文字列に該当するディレクトリを検索せよ。
+        test/app1
+        test/app1/app1.jpg
+        test/app1/app1.png
+        test/app1/app1.gif
+        test/app2/app1.jpg
+        test/app2/app1.png
+        test/app2/app1.gif
+        test/app3/app1.jpg
+        test/app3/app1.png
+        test/app3/app1.gif
+        test/app4/app1.jpg
+        test/app4/app1.png
+        test/app4/app1.gif
+        test/app5/app1.jpg
+        test/app5/app1.png
+        test/app5/app1.gif
+        ```
+        
+    - ディレクトリではなくて、ファイルだけ検索したいという場合は最後に `-type f` と書きます。
+        
+        また、ディレクトリだけにしたい場合は `-type d` と書きます。
+        
+        ```bash
+        dotinstall:~ $ find test -name 'app1*' -type f # 最後に-type fを付けるとファイルだけを検索してくれる。
+        test/app1/app1.jpg # ディレクトリが除外されている。
+        test/app1/app1.png
+        test/app1/app1.gif
+        test/app2/app1.jpg
+        test/app2/app1.png
+        test/app2/app1.gif
+        test/app3/app1.jpg
+        test/app3/app1.png
+        test/app3/app1.gif
+        test/app4/app1.jpg
+        test/app4/app1.png
+        test/app4/app1.gif
+        test/app5/app1.jpg
+        test/app5/app1.png
+        test/app5/app1.gif
+        
+        dotinstall:~ $ find test -name 'app1*' -type d # 最後に-type dを付けるとディレクトリだけを検索してくれる。
+        test/app1
+        ```
 
+※find は奥が深いのですが、使いこなせるようになっておくと便利です。
+### 要点
+ファイルの検索をすることができるfindコマンドについて学んでいきます。
+
+- find：ディレクトリやファイルを検索してくれるコマンド。
+    - `find 場所を指定 -nameオプション 検索したいディレクトリの名前` これが基本の型。
+- ワイルドカードとの組み合わせ：`test -name 'app1*'`
+- type f：`find 場所を指定 -nameオプション 検索したいディレクトリの名前 -type f` 、ファイルだけを検索してくれる。
+- type d：`find 場所を指定 -nameオプション 検索したいディレクトリの名前 -type d`、ディレクトリだけを検索してくれる。</details>

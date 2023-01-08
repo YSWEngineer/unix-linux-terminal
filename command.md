@@ -2501,3 +2501,87 @@ Bashで数値計算をするいくつかの方法について見ていきます�
 
 <details><summary>#08 ifで条件分岐をしてみよう</summary>
 
+- if を使用した条件分岐を見ていきます。
+    - 例) `read -p “Name? “ name` で名前を訊いた時、もし name が taguchi なら welcome! と表示したいとします。その場合は `if test` と書き、次に `“$name” = “taguchi”` とチェックしたい条件を書きます。
+        
+        test をパスした場合の処理を `then` の後に書きます。
+        
+        最後に処理を終了させるには、 `if` を逆にした `fi` を書きます。
+        
+        尚、 `$name` には空白が含まれる可能性があるので、 “” で囲っている点に注意しましょう。
+        
+        ```bash
+        #!/bin/bash
+        # if
+        
+        read -p "Name? " name
+        if test "$name" = "taguchi"
+        then
+          echo "welcome"
+        fi
+        ```
+        
+    - test にはもう1つの書き方が用意されています。`if [ “$name” = “taguchi” ]` のように [ ] 大括弧で囲っても同じ意味になります。ここの [ ] 大括弧はコマンドなので、続く文字列が引数になるようにそれぞれの間にきちんと空白を入れます。
+        
+        ```bash
+        #!/bin/bash
+        # if
+        
+        read -p "Name? " name
+        # if test "$name" = "taguchi"
+        if [ "$name" = "taguchi" ] # []はコマンド。スペースに気を付けること。
+        then
+          echo "welcome"
+        fi
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        Name? taguchi # Name?とテキストが表示され、入力待ちになる。
+        welcome # testをパスすると、welcomeが表示される。
+        
+        # 別の名前を入れると
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        Name? yoshiwo # 下にwelcomeが表示されない。
+        ```
+        
+    - test に失敗した時の処理を書くには、else に繋いでさらに書いていきます。例えば `echo "you are not allowed!”` 。
+        
+        さらに条件を追加したい場合は、elif でさらに条件を `[ “$name” = “fkoji” ]` のように書きます。
+        
+        ```bash
+        #!/bin/bash
+        # if
+        
+        read -p "Name? " name
+        # if test "$name" = "taguchi"
+        if [ "$name" = "taguchi" ]
+        then
+          echo "welcome"
+        elif [ "$name" = "fkoji" ]
+        then
+          echo "welcome, too"
+        else
+          echo "you are not allowed"
+        fi
+        ```
+        
+    - then に1行使わずに、条件の行と一緒に書く方法もよく見かけるので、それも覚えましょう。
+        
+        ```bash
+        if [ "$name" = "taguchi" ]; then
+          echo "welcome"
+        elif [ "$name" = "fkoji" ]; then
+          echo "welcome, too"
+        else
+          echo "you are not allowed"
+        fi
+        ```
+
+### 要点
+ifを使って条件分岐をする方法について見ていきます。
+
+- if ... then ... fi：条件分岐は if から始まり、条件をパスした時の処理を then の後に書き、 fi で処理を終了させる。
+- if ... elif ... else ... fi：さらに条件を追加したい場合の elif（エルスイフ)、パスできなかった場合の処理を書くには else に繋いで書く。</details>
+
+
+<details><summary>#09 文字列の比較をしてみよう</summary>
+

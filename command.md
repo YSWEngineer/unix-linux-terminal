@@ -2368,3 +2368,62 @@ readを使ってユーザーから入力を受け付ける方法を見ていき�
 
 <details><summary>#06 配列を使ってみよう</summary>
 
+- 複数の値を1つの変数で管理できる配列について。
+    - 配列に入れたい複数の値は、 ( ) の中に書きます。
+        
+        それぞれの要素にアクセスしたい場合は、`${変数名[0から始まる添字]}` と書きます。`${colors[0]}` `${colors[1]}` `${colors[2]}` はそれぞれ0番目、1番目、2番目となり、red blue pink の結果になります。
+        
+        全ての要素を表示したい場合は、 [ ] の中を @ にします。
+        
+        要素の個数を表示したい場合は、変数名の前に # を付けます。
+        
+        ```bash
+        colors=(red blue pink)
+        echo ${colors[0]} # 0番目 red
+        echo ${colors[1]} # 1番目 blue
+        echo ${colors[2]} # 2番目 pink
+        echo ${colors[@]} # 全ての要素が表示される red blue pink
+        echo ${#colors[@]} # 要素の個数が表示される 3
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        red
+        blue
+        pink
+        red blue pink
+        3
+        ```
+        
+    - 要素の変更をしたい場合、例えば1番目の blue を silver に変更するには、`colors[1]=silver` と書きます。
+        
+        末尾にいくつか追加したい場合、+= 記号を使用して、例えば `colors+=(green orange)` と書きます。
+        
+        ```bash
+        colors=(red blue pink)
+        # echo ${colors[0]} # 0番目 red
+        # echo ${colors[1]} # 1番目 blue
+        # echo ${colors[2]} # 2番目 pink
+        # echo ${colors[@]} # 全ての要素が表示される red blue pink
+        # echo ${#colors[@]} # 要素の個数が表示される 3
+        
+        colors[1]=silver
+        colors+=(green orange)
+        echo ${colors[@]}
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        red silver pink green orange
+        ```
+
+### 要点
+複数の値をまとめて扱うことができる配列について見ていきます。
+
+- 配列の作成：配列に入れたい複数の要素は ( ) の中に書く。
+- 要素へのアクセス：`${変数名[0から始まる添字]}` と書く。
+- すべての要素の取得： [ ] の中を @ にする。
+- 要素の個数：変数名の前に # を付ける。
+- 配列の変更
+    - 要素の変更をしたい場合、例えば1番目の blue を silver に変更するには、`colors[1]=silver` と書きます。
+  	- 末尾にいくつか追加したい場合、+= 記号を使用して、例えば `colors+=(green orange)` と書きます。</details>
+
+
+<details><summary>#07 数値計算をしてみよう</summary>
+

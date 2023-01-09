@@ -2817,3 +2817,104 @@ forを使って繰り返し処理を実装する方法について見ていき�
 
 <details><summary>#12 while を使ってみよう</summary>
 
+- while ついて。
+    - 例）i=0 にして i < 10 の間、次の処理を行います。
+        
+        ```bash
+        #!/bin/bash
+        # whileを使用したループ処理
+        
+        i=0
+        while ((i < 10)); do
+          ((i++))
+          echo $i
+        done
+        
+        % ./hello
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+        ```
+        
+- ループをスキップするための continue 、ループを抜けるための break について。
+    - 例）4 の時にループをスキップして、8 の時にループを抜ける処理を書きます。
+        
+        数値に関する条件なので (( )) 二重丸括弧を使い、
+        
+        ((i == 4)) の時は continue 、((i == 8)) の時は break、と書きます。
+        
+        ```bash
+        #!/bin/bash
+        # whileを使用したループ処理
+        # ループをスキップするための continue、ループを抜けるための break
+        # i=0
+        # while ((i < 10)); do
+        #   ((i++))
+        #   echo $i
+        # done
+        
+        i=0
+        while ((i < 10)); do
+          ((i++))
+          if ((i == 4)); then
+            continue
+          fi
+          if ((i == 8)); then
+            break
+          fi
+          echo $i
+        done
+        
+        % ./hello
+        1
+        2
+        3
+        5
+        6
+        7
+        ```
+        
+- while で無限ループを回しつつ条件に応じてループを抜ける方法。
+    - 無限ループにはいくつかの方法がありますが、今回には `while :` とします。
+        
+        ユーザーからコマンドを受け付けつつ、もしそれが `$cmd == "quit"` だった時はループを抜けて、そうではない場合はそのコマンドをシンプルに表示するといった処理を書いてあげましょう。
+        
+        ```bash
+        while : # 無限ループ開始
+        do
+          read -p "Command? " cmd # 文字列「Command? 」を表示させ、コマンドの入力待ちにせよ。
+          if [[ $cmd == "quit" ]]; then # もしもコマンドが「quit」という文字列ならば、以下を実行せよ。
+            break # ループを抜けろ。
+          else # そうでなければ以下を実行せよ。
+            echo "$cmd" # コマンド入力した文字列を表示せよ。
+          fi # 条件分岐終了。
+        done
+        
+        % ./hello
+        Command? yoshiwo
+        yoshiwo
+        Command? 1234556
+        1234556
+        Command? 9876
+        9876
+        Command? quit # quitと入力するとループから抜ける。
+        ```
+
+### 要点
+ある条件が満たされている間、処理を繰り返し行うことができるwhileについて見ていきます。
+
+- while：ループ処理を行う。`while :` を文頭に書く。
+- continue：ループをスキップする。
+- break：ループから抜ける
+- 無限ループ</details>
+
+
+<details><summary>#13 ファイルの内容を処理してみよう</summary>
+

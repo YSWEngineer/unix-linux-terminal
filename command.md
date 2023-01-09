@@ -2923,15 +2923,14 @@ forを使って繰り返し処理を実装する方法について見ていき�
         - cat にリダイレクション( > や < などの記号のこと)を書いて、colors.txt というファイルを作成します。return キーを押すと次の行から入力ができるようになっているので、 red blue pink を入力、最後に control + D で入力を終了させます。
             
             ```bash
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat > colors.txt # returnキーを押すと次の行から入力ができるようになります。
+            % cat > colors.txt # returnキーを押すと次の行から入力ができるようになります。
             
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat > colors.txt
+            % cat > colors.txt
             red
             blue
             pink # 入力を終えたら最後に control + D を押して、入力を終了させる。そして、txtファイルの完成。
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons %
-            
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat colors.txt
+                        
+            % cat colors.txt
             red
             blue
             pink
@@ -2949,7 +2948,7 @@ forを使って繰り返し処理を実装する方法について見ていき�
           ((i++)) # 1ずつ増加。
         done < colors.txt
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         1 red
         2 blue
         3 pink
@@ -2968,7 +2967,7 @@ forを使って繰り返し処理を実装する方法について見ていき�
         # done < colors.txt
         done
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat hello | ./hello
+        % cat hello | ./hello
         1 #!/bin/bash
         2 # while ファイルの内容を読み取って各行に対して何かを行う、という処理について。
         3

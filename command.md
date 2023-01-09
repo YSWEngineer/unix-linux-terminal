@@ -2989,3 +2989,76 @@ forを使って繰り返し処理を実装する方法について見ていき�
 
 <details><summary>#14 case で条件分岐をしてみよう</summary>
 
+- case は変数の値によって処理を振り分けるためのものです。
+    - 例）信号機を想定します。case の中で値に応じて処理を書くには red) のように値の後ろに丸括弧で閉じます。
+        
+        red の処理を終えるには ;; (セミコロン)を2つ書きます。
+        
+        どこにも当てはまらない場合は * (アスタリスク)を書きます。
+        
+        case の終わりには、case を逆にした `esac` を書きます。
+        
+        ```bash
+        #!/bin/bash
+        # case 変数の値によって処理を振り分けるためのもの。
+        
+        read -p "Signal color? " color
+        case "$color" in
+          red) # 値の後ろに丸括弧で閉じること。
+            echo "stop"
+            ;; # 処理を終えるには ;; アスタリスクを2つ。
+          blue)
+            echo "go"
+            ;;
+          yellow)
+            echo "caution"
+            ;;
+          *)
+            echo "wrong signal"
+        esac # case の終わりには esac を書くこと。
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        Signal color? red
+        stop
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        Signal color? yellow
+        caution
+        ```
+        
+        case の条件は高機能で、例えば `blue|green)` とすると、blue もしくは green 時には “go” の処理を行うという書き方になります。
+        
+        ```bash
+        read -p "Signal color? " color
+        case "$color" in
+          red)
+            echo "stop"
+            ;;
+          blue|green) # blueでもgreenでも"go"が処理される。
+            echo "go"
+            ;;
+          yellow)
+            echo "caution"
+            ;;
+          *)
+            echo "wrong signal"
+        esac
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        Signal color? green
+        go
+        ```
+        
+        他にもワイルドカードや部分一致なども使用できますので、興味がある人は調べてみてください。
+
+### 要点
+変数の値に応じて処理を振り分けることができるcaseについて見ていきます。
+
+- case：
+    - 値の後ろは丸括弧で閉じること。例）red)
+    - 処理を終えるには ;; (セミコロン)2つ。
+    - 値がどこにも当てはまらない場合は * (アスタリスク)。
+    - case の終わりには esac を書く。</details>
+
+
+<details><summary>#15 select でメニューを作ってみよう</summary>
+

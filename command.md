@@ -2662,7 +2662,7 @@ ifを使って条件分岐をする方法について見ていきます。
               echo "file exists ..." # 文字列「file exists ...」を表示せよ。
             fi # 条件分岐終了。
             
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            % ./hello
             file exists ...
             ```
             
@@ -2673,8 +2673,7 @@ ifを使って条件分岐をする方法について見ていきます。
               echo "dir exists ..." # 文字列「dir exists ...」を表示せよ。
             fi # 条件分岐終了。
             
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons %
+            % ./hello
             ```
             
 - 数値の比較について。
@@ -2691,9 +2690,9 @@ ifを使って条件分岐をする方法について見ていきます。
               echo "bigger than 10"
             fi
             
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            % ./hello
             Number? 5
-            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            % ./hello
             Number? 15
             bigger than 10
             ```
@@ -2744,7 +2743,7 @@ ifを使って条件分岐をする方法について見ていきます。
           echo $i
         done
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         1
         2
         3
@@ -2760,7 +2759,7 @@ ifを使って条件分岐をする方法について見ていきます。
           echo $i
         done
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         1
         2
         3
@@ -2777,7 +2776,7 @@ ifを使って条件分岐をする方法について見ていきます。
           echo $color
         done
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         red
         blue
         pink
@@ -2787,7 +2786,7 @@ ifを使って条件分岐をする方法について見ていきます。
     - 例）シェルで date と入力して表示された結果を for に渡して空白ごとに区切られた要素を処理する。
         
         ```bash
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % date
+        % date
         2022年 9月 1日 木曜日 14時15分37秒 JST
         ```
         
@@ -2799,7 +2798,7 @@ ifを使って条件分岐をする方法について見ていきます。
           echo $item
         done # dateの要素が改行付きで表示されます。
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         2022年
         9月
         1日
@@ -2818,6 +2817,3 @@ forを使って繰り返し処理を実装する方法について見ていき�
 
 <details><summary>#12 while を使ってみよう</summary>
 
-
-	
-	

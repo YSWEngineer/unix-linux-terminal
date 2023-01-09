@@ -2918,3 +2918,75 @@ forを使って繰り返し処理を実装する方法について見ていき�
 
 <details><summary>#13 ファイルの内容を処理してみよう</summary>
 
+- while はループ処理の他にファイルの内容を読み取って各行に対して何かをする処理もよく書きます。
+    - その方法を見る前に、データファイルを用意します。いろいろな方法がありますが、今回はちょっとしたテクニックを使用して colors.txt というファイルをこの場で作成します。
+        - cat にリダイレクション( > や < などの記号のこと)を書いて、colors.txt というファイルを作成します。return キーを押すと次の行から入力ができるようになっているので、 red blue pink を入力、最後に control + D で入力を終了させます。
+            
+            ```bash
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat > colors.txt # returnキーを押すと次の行から入力ができるようになります。
+            
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat > colors.txt
+            red
+            blue
+            pink # 入力を終えたら最後に control + D を押して、入力を終了させる。そして、txtファイルの完成。
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons %
+            
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat colors.txt
+            red
+            blue
+            pink
+            ```
+            
+    - 作成した txt ファイルの中身を while を使用して出力します。今回は行番号付きで出力します。※行番号付きでの表示：`echo $1 “$line”` と書く。
+        
+        ```bash
+        #!/bin/bash
+        # while ファイルの内容を読み取って各行に対して何かを行う、という処理について。
+        
+        i=1
+        while read line; do
+          echo $i "$line"
+          ((i++)) # 1ずつ増加。
+        done < colors.txt
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        1 red
+        2 blue
+        3 pink
+        ```
+        
+    - スクリプト内でファイル名を表示するのではなく、実行時にパイプを使用して繋げる方法。
+        
+        ```bash
+        #!/bin/bash
+        # while ファイルの内容を読み取って各行に対して何かを行う、という処理について。
+        
+        i=1
+        while read line; do
+          echo $i "$line"
+          ((i++))
+        # done < colors.txt
+        done
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % cat hello | ./hello
+        1 #!/bin/bash
+        2 # while ファイルの内容を読み取って各行に対して何かを行う、という処理について。
+        3
+        4 i=1
+        5 while read line; do
+        6 echo $i "$line"
+        7 ((i++))
+        8 # done < colors.txt
+        9 done
+        ```
+
+### 要点
+ファイルの内容を読み取ってwhileで処理する方法について見ていきます。
+
+- データファイルの作成：cat にリダイレクションにファイル名でデータファイルを作成できる。
+- whileによる処理：while を使用してファイルの中身を出力できる。
+- パイプを使う方法：今回の場合、`$ cat hello | ./hello` とスクリプト自体にパイプを挟んで繋げた。</details>
+
+
+<details><summary>#14 case で条件分岐をしてみよう</summary>
+

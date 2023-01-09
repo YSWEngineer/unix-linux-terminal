@@ -3017,10 +3017,10 @@ forを使って繰り返し処理を実装する方法について見ていき�
             echo "wrong signal"
         esac # case の終わりには esac を書くこと。
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         Signal color? red
         stop
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         Signal color? yellow
         caution
         ```
@@ -3043,7 +3043,7 @@ forを使って繰り返し処理を実装する方法について見ていき�
             echo "wrong signal"
         esac
         
-        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        % ./hello
         Signal color? green
         go
         ```

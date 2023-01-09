@@ -2645,3 +2645,77 @@ ifを使って条件分岐をする方法について見ていきます。
 
 <details><summary>#10 ファイルや数値の比較をしてみよう</summary>
 
+- 条件分岐でファイルの存在の判定にもよく使用されます。
+    - 種類を問わず存在しているかどうか調べるには -e 、ファイルが存在しているかは -f 、ディレクトリが存在しているかどうかは -d で調べることができます。
+        - 例）今使用しているこのスクリプトファイルが存在するかどうかの判定を行う。
+            
+            ファイルの判定には [[ ]] 二重大括弧を使用するので、 `if [[ -f $0 ]];` と書きます。
+            
+            もし存在していたら、 `file exists …` と書きましょう。※exist：存在する、実在する、という意味。
+            
+            $0 は特殊変数でスクリプトの名前を表示する。./hello はファイルなので、 file exists … になります。
+            
+            ※スクリプト：「書いて、すぐ実行できるプログラム」のことを指す。
+            
+            ```bash
+            if [[ -f $0 ]]; then # $0は特殊変数でスクリプトの名前を表示する。もしもファイルの存在が真なら以下を実行せよ。
+              echo "file exists ..." # 文字列「file exists ...」を表示せよ。
+            fi # 条件分岐終了。
+            
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            file exists ...
+            ```
+            
+        - 例）もしも ./hello がディレクトリだった場合は `dir exists …` と表示する。※dir：ディレクトリのこと。
+            
+            ```bash
+            if [[ -d $0 ]]; then # もしもディレクトリの存在が真なら以下を実行せよ。
+              echo "dir exists ..." # 文字列「dir exists ...」を表示せよ。
+            fi # 条件分岐終了。
+            
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons %
+            ```
+            
+- 数値の比較について。
+    - 数値演算の時に使用した (( )) 二重丸括弧を使います。
+        - 例）Number をユーザーに入力してもらい、もしも n が10より大きかった場合はメッセージを出すようにします。
+            
+            (( )) を使用して `if((n > 10))` と書きます。
+            
+            二重丸括弧を使用した場合は、 `n > 10` の前後にスペースを入れる必要はないので覚えておきましょう。
+            
+            ```bash
+            read -p "Number? " n
+            if ((n > 10)); then
+              echo "bigger than 10"
+            fi
+            
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            Number? 5
+            yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+            Number? 15
+            bigger than 10
+            ```
+            
+        - 比較のための演算子は、数値の場合では、等しいは == 、等しくないは !=、〇〇より大きい >、〇〇以上 >=、〇〇より小さい <、〇〇以下 <=、などが使えます。
+            
+            ```bash
+            # == != > >= < <=
+            ```
+            
+- (( )) 、[[ ]] には条件を組み合わせるための論理演算子も用意されています。
+    - AND は &&、OR が ||、NOT は ! 、なのでそれらを使用して思った通りの条件を組み立てられるようになっておきましょう。
+        
+        ```bash
+        # && || !
+        ```
+
+ファイルの存在確認や数値の比較について説明していきます。
+
+- ファイルの存在確認：ファイルの判定に必要な [[ ]] 二重大括弧を使用して、-f で調べることができる。
+- 数値の比較方法：数値演算で用いる (( )) 二重丸括弧、比較演算子を使用する。</details>
+
+
+<details><summary>#11 forでループ処理をしてみよう</summary>
+

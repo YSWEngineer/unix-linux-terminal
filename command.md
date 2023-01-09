@@ -2711,6 +2711,7 @@ ifを使って条件分岐をする方法について見ていきます。
         # && || !
         ```
 
+### 要点
 ファイルの存在確認や数値の比較について説明していきます。
 
 - ファイルの存在確認：ファイルの判定に必要な [[ ]] 二重大括弧を使用して、-f で調べることができる。
@@ -2719,3 +2720,104 @@ ifを使って条件分岐をする方法について見ていきます。
 
 <details><summary>#11 forでループ処理をしてみよう</summary>
 
+- for によるループ処理を見ていきます。
+    - 例）1 から 5 を出力したい場合、 `for i in 1 2 3 4 5` と書くと in の後の値の集合から一つずつ値を取り出して i に格納して、 `do … done` の間で処理で使用することができます。
+        
+        ```bash
+        for i in 1 2 3 4 5
+        do
+        done
+        ```
+        
+        ちなみに、単純な数の連番であれば bash のブレース展開を使用できるので覚えておきましょう。※ブレース：波括弧のこと。例えば {a..z} で a から z までの連番を1行にまとめて書くことができます。
+        
+        また、 do は1行にまとめて書くことが多いので、書けるようにしましょう。
+        
+        ```bash
+        # for i in 1 2 3 4 5
+        for i in {1..5} # ブレース展開で1から5をまとめることができる。
+        do
+          echo $i
+        done
+        
+        for i in {1..5}; do # doは1行にまとめて書くことが多いので、このような書き方ができるようにすること。
+          echo $i
+        done
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        1
+        2
+        3
+        4
+        5
+        ```
+        
+- 他のプログラミング言語で見るような構文も、用意されています。
+    - 数値の演算で使用した (( )) 二重丸括弧で、 `for ((i=1; i<=; i++));` と書くと同じように 1 から 5 が表示されます。
+        
+        ```bash
+        for ((i=1; i<=5; i++)); do
+          echo $i
+        done
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        1
+        2
+        3
+        4
+        5
+        ```
+        
+- 配列を使用したい場合。
+    - 例）`color=(red blue pink)` を for で回す。この時配列の全ての要素を取り出すには `for color in ${colors[@]};` と書きます。
+        
+        ```bash
+        colors=(red blue pink)
+        for color in ${colors[@]}; do
+          echo $color
+        done
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        red
+        blue
+        pink
+        ```
+        
+- in の後に、コマンドの実行結果を使用する。
+    - 例）シェルで date と入力して表示された結果を for に渡して空白ごとに区切られた要素を処理する。
+        
+        ```bash
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % date
+        2022年 9月 1日 木曜日 14時15分37秒 JST
+        ```
+        
+        コマンドの実行結果を受け取るには バッククォートを使って ``date`` としてあげても良いのですが、最近だとコマンドの実行結果を受け取るには $( ) を使うので `$(date)` のように書いてあげてください。
+        
+        ```bash
+        # for item in `date`; do
+        for item in $(date); do
+          echo $item
+        done # dateの要素が改行付きで表示されます。
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        2022年
+        9月
+        1日
+        木曜日
+        14時22分36秒
+        JST
+        ```
+
+### 要点
+forを使って繰り返し処理を実装する方法について見ていきます。
+
+- for：ループ処理を行う。
+- 配列との併用
+- コマンドの実行結果との併用</details>
+
+
+<details><summary>#12 while を使ってみよう</summary>
+
+
+	
+	

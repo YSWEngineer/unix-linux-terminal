@@ -3062,3 +3062,50 @@ forを使って繰り返し処理を実装する方法について見ていき�
 
 <details><summary>#15 select でメニューを作ってみよう</summary>
 
+- ユーザーに値を選んでもらう時に使用する select について。
+    - `select color in` と書いて、選択肢を羅列してきます。
+        
+        do … done の中でユーザーが選んだ、red blue yellow greenどれかの値を color として使うことができます。
+        
+        しかし、select の処理はループ処理になるので、どこかで break 処理が必要となります。
+        
+        ```bash
+        #!/bin/bash
+        # select ユーザーに値を選んでもらう時に使用する。
+        
+        select color in red blue yellow green; do
+        case "$color" in
+          red)
+            echo "stop"
+            ;;
+          blue|green)
+            echo "go"
+            ;;
+          yellow)
+            echo "caution"
+            ;;
+          *)
+            echo "wrong signal"
+            break
+          esac
+        done
+        
+        % ./hello
+        1) red
+        2) blue
+        3) yellow
+        4) green
+        #? 4
+        go
+        ```
+        
+select は処理メニューなどを作成する時によく使用するので慣れるようにしてください。
+### 要点
+ユーザーに値を選んでもらうことができるselectについて説明していきます。
+
+- select：select の処理はループ処理なので break が必要になる。
+- break：ループ処理を終わらせる。</details>
+
+
+<details><summary>#16 関数を使ってみよう</summary>
+

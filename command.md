@@ -3213,3 +3213,52 @@ select は処理メニューなどを作成する時によく使用するので�
 - 終了ステータス：終了ステータスは 0 から 255 の間で指定できる。UNIX の世界では 0 で正常終了、それ以外(大抵の場合は 1 )は異常終了を意味する。</details>
 
 
+<details><summary>#17 変数のスコープを理解しよう</summary>
+
+- bash (シェル)ですが、変数はどこからでもアクセスできます。※bash：シェルのこと。
+    
+    ```bash
+    #!/bin/bash
+    # 関数
+    
+    hello() {
+      name="taguchi"
+      echo "hello ..."
+    }
+    
+    hello
+    echo $name # taguchi
+    
+    yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+    hello ...
+    taguchi
+    ```
+    
+    - そうではなく、宣言した変数はこの関数の中でだけ有効にしたい場合。
+        
+        その場合は、local というキーワードを付けます。
+        
+        ```bash
+        #!/bin/bash
+        # 関数
+        
+        hello() {
+          # name="taguchi"
+          local name="taguchi" # localというキーワードを付ける。
+          echo "hello ..."
+        }
+        
+        hello
+        echo $name # taguchi
+        
+        yoshiwo@Yoshiwos-MacBook-Pro shellscript_lessons % ./hello
+        hello ... # 関数の外では変数が使えなくなっている。
+        ```
+        
+    
+※場合によっては local 指定して、変数をこの中でしか使用できないようにすることもあるので、使い方に慣れておきましょう。
+### 要点
+変数の有効範囲について例を出しながら説明していきます。
+
+- 変数の有効範囲：bash (シェル)において、どこからでもアクセスすることができる。
+- local：local を指定する(付ける)ことで、変数をこの中でしか使用できないようにすることができる。</details>

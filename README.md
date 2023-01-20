@@ -1,7 +1,7 @@
 # Unix, Linux, Terminal
 ### Unix、Linuxについての違いや使用方法について学んだ内容をまとめています。
 
-### <概要>
+### <概要> ※原文を引用
 
 <details><summary>①UNIX とは</summary>
 

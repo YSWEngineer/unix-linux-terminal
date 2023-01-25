@@ -25,6 +25,6 @@ UnixとLinuxのもっとも大きな違いは、その形態にある。
 - Linuxはオープンソースでとにかく無料だし改変も配布も自由だ
 これが大きな違いとなっている。
 
-結論的には、**親戚関係でライセンスのあり方が違う**とだけ覚えておけばいいだろう。身も蓋もないが、これだけの理解でまずは構わない。
+結論的には、**親戚関係でライセンスのあり方が違う**とだけ覚えておけばいいだろう。身も蓋もないが、これだけの理解でまずは構わない。</details>
 
-## [](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/command.md)
+## [💻ドットインストール 『UNIXコマンド入門』『シェルスクリプト入門』](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/command.md)

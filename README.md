@@ -1,7 +1,7 @@
 # Unix, Linux, Terminal
-### Unix、Linuxについての違いや使用方法について学んだ内容をまとめています。
+## Unix、Linuxについての違いや使用方法について学んだ内容をまとめています。
 
-### <概要> ※原文を引用
+## <概要> ※原文を引用
 
 <details><summary>①UNIX とは</summary>
 
@@ -26,3 +26,5 @@ UnixとLinuxのもっとも大きな違いは、その形態にある。
 これが大きな違いとなっている。
 
 結論的には、**親戚関係でライセンスのあり方が違う**とだけ覚えておけばいいだろう。身も蓋もないが、これだけの理解でまずは構わない。
+
+## [](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/command.md)

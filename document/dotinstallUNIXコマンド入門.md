@@ -1,4 +1,4 @@
-# 💻 ドットインストール UNIXコマンド入門
+# 💻 dotinstall UNIXコマンド入門
 ### UNIX互換OSで使える、基本的なコマンドを学んでいきます。
 
 <details><summary>#01 UNIXコマンドの学習をしていこう</summary>

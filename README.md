@@ -1,5 +1,5 @@
 # Unix, Linux, Terminal
-## Unix、Linuxについての違いや使用方法について学んだ内容をまとめています。
+## Unix、Linuxについての違い、使用方法について学んだ内容をまとめています。
 
 ## <概要> ※原文を引用
 
@@ -30,3 +30,5 @@ UnixとLinuxのもっとも大きな違いは、その形態にある。
 ## [💻dotinstall UNIXコマンド入門](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/dotinstallUNIX%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%85%A5%E9%96%80.md)
 
 ## [💻dotinstall シェルスクリプト入門](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/dotinstall%E3%82%B7%E3%82%A7%E3%83%AB%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E5%85%A5%E9%96%80.md)
+
+## [🕹操作内容について](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/operation.md)

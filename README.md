@@ -31,4 +31,4 @@ UnixとLinuxのもっとも大きな違いは、その形態にある。
 
 ## [💻dotinstall シェルスクリプト入門](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/dotinstall%E3%82%B7%E3%82%A7%E3%83%AB%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E5%85%A5%E9%96%80.md)
 
-## [🕹操作内容について](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/operation.md)
+## [🕹操作方法について](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/operation.md)

@@ -27,4 +27,4 @@ UnixとLinuxのもっとも大きな違いは、その形態にある。
 
 結論的には、**親戚関係でライセンスのあり方が違う**とだけ覚えておけばいいだろう。身も蓋もないが、これだけの理解でまずは構わない。</details>
 
-## [💻ドットインストール 『UNIXコマンド入門』『シェルスクリプト入門』](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/command.md)
+## [💻dotinstall UNIXコマンド入門](https://github.com/YSWEngineer/unix-linux-terminal/blob/main/document/dotinstallUNIX%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%85%A5%E9%96%80.md)
